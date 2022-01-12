@@ -10,11 +10,6 @@ const Links = () => (
       </Link>
     </li>
     <li>
-      <Link to="/about-us" prefetch="intent">
-        about us
-      </Link>
-    </li>
-    <li>
       <Link to="/get-started" prefetch="intent">
         get started
       </Link>

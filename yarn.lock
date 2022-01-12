@@ -30,17 +30,6 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@cloudflare/pages-functions-compiler@0.3.8":
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/@cloudflare/pages-functions-compiler/-/pages-functions-compiler-0.3.8.tgz#bcb9ed93bab9c0a7c1067252ae74adfe7bf42b57"
-  integrity sha512-4aaAprXZMSekSv3lubOOUnS4s8IYXyY5Px6EEnF7tQmzjaeQk22q2LLTCdGYgs16LMf+Bd94787xGcQP9gLDWw==
-  dependencies:
-    acorn "^8.4.1"
-    acorn-walk "^8.1.1"
-    commander "^8.1.0"
-    esbuild "0.14.1"
-    path-to-regexp "^6.2.0"
-
 "@cloudflare/workers-types@^3.2.0":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@cloudflare/workers-types/-/workers-types-3.3.0.tgz#a05cf8e27bf007a93c6437bf22daa616b1b5fc42"
@@ -471,12 +460,7 @@ acorn-jsx@^5.0.0:
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.2.tgz#7ed5bb55908b3b2f1bc55c6af1653bada7f07937"
   integrity sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==
 
-acorn-walk@^8.1.1:
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/acorn-walk/-/acorn-walk-8.2.0.tgz#741210f2e2426454508853a2f44d0ab83b7f69c1"
-  integrity sha512-k+iyHEuPgSw6SbuDpGQM+06HQUa04DZ3o+F6CSzXMvvI5KMvnaEqXe+YVe555R9nn6GPt404fos4wcgpw12SDA==
-
-acorn@^8.0.0, acorn@^8.4.1:
+acorn@^8.0.0:
   version "8.7.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.7.0.tgz#90951fde0f8f09df93549481e5fc141445b791cf"
   integrity sha512-V/LGr1APy+PXIwKebEWrkZPwoeoF+w1jiOBUmuxuiUIaOHtob8Qc9BTrYo7VuI5fR8tqsy+buA2WFooR5olqvQ==
@@ -726,11 +710,6 @@ comma-separated-tokens@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/comma-separated-tokens/-/comma-separated-tokens-2.0.2.tgz#d4c25abb679b7751c880be623c1179780fe1dd98"
   integrity sha512-G5yTt3KQN4Yn7Yk4ed73hlZ1evrFKXeUW3086p3PRFNp7m2vIjI6Pg+Kgb+oyzhd9F2qdcoj67+y3SdxL5XWsg==
-
-commander@^8.1.0:
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-8.3.0.tgz#4837ea1b2da67b9c616a67afbb0fafee567bca66"
-  integrity sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==
 
 concat-map@0.0.1:
   version "0.0.1"
@@ -3293,14 +3272,14 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-wrangler@alpha:
-  version "0.0.0-5af9eb8"
-  resolved "https://registry.yarnpkg.com/wrangler/-/wrangler-0.0.0-5af9eb8.tgz#408ad77e41bd278409735cce1a9ed02be5cab4c9"
-  integrity sha512-kXLTYrpqE+64iQYvAeeuDPWUkOARAWGHbBFrWixUJEQr963qdzy3xm+TM5OUOA65oV8723NrJn9wEiNj66rxmw==
+wrangler@pages:
+  version "0.0.0-8ab7d2e"
+  resolved "https://registry.yarnpkg.com/wrangler/-/wrangler-0.0.0-8ab7d2e.tgz#ec887acfb51244933787406c281cf484e2ec3174"
+  integrity sha512-JC8xdq74JmdRk8ghJ3NuL7L/C00jCug2D1vHG6ainM9dKT+hNkmTxbgJirM9LwDu8kMMy9h/2lr1n6rAhNEIGA==
   dependencies:
-    "@cloudflare/pages-functions-compiler" "0.3.8"
     esbuild "0.14.1"
     miniflare "2.0.0-rc.4"
+    path-to-regexp "^6.2.0"
     semiver "^1.1.0"
   optionalDependencies:
     fsevents "~2.3.2"
