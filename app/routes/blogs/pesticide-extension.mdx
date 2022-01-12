@@ -1,7 +1,7 @@
 ---
 meta:
-  title: Google Pesticide Extension - A Must Have For Front End Developers
-  description: A quick dive into the chrome extension pesticide
+  title: Pesticide - A Must Have For Front End Developers
+  description: A quick dive into the chrome extension Pesticide
 slug: '/blogs/pesticide-extension'
 author: Mark Mulligan
 img: '/img/blog/pesticide-extension.jpg'
@@ -13,23 +13,152 @@ import BlogLayout from '~/layouts/BlogLayout';
 
 ## What is Pesticide?
 
-If you haven’t used it before, the google chrome extension Pesticide is a must have for any front end developer.  
-The extension outlines all elements in the dom so you can easily see alignment and spacing.  
-In can allow you to line things up on the page or even catch bugs when working with css.
+If you haven’t used it before, the google chrome extension [Pesticide](https://chrome.google.com/webstore/detail/pesticide-for-chrome-with/neonnmencpneifkhlmhmfhfiklgjmloi?hl=en-US) is a must have for any front end developer.
+The extension outlines all elements in the dom so you can easily see alignment and spacing.
+In can also allow to catch bugs when working with css.
 
 ## But can’t I just use my dev console to see an elements style?
 
-While this is a good approach for finding detailed information about a certain element on a page, Pesticide is better to get an quick overview.  
-I find using that by using Pesticide, I don’t have to open up the elements portion of my developer console near as much, saving me development time.  
+While this is a good approach for finding detailed information about a certain element on a page, Pesticide is better to get a quick overview.
+I find using that by using Pesticide, I don’t have to open up the elements portion of my developer console near as much, saving me development time.
 Also, as projects get bigger, it can be hard to find the specific element you are looking for. With Pesticide, all elements are outlined so you don’t have to search for a specific one.
 
 ## Example Usage
 
-Let’s look example to see pesticide in action.
+Let’s look at an example to see pesticide in action.
 
 - First, if you have not already, make sure to install Pesticide.
 - After doing this, create a new folder call google-pesticide-example
 - Open this folder in you favorite IDE. I will be using Visual Studio Code.
 - Create a file called index.html in the folder and copy and paste this code into that file.
+
+&nbsp;
+
+```
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Google Pesticide</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Google Pesticide</h1>
+      <hr />
+      <h2>Why should I use it?</h2>
+      <ul class="custom-list">
+        <li>Easy to align items</li>
+        <li>See what is causing elements to not be where you want them</li>
+        <li>Develop faster</li>
+      </ul>
+    </div>
+  </body>
+</html>
+```
+
+&nbsp;
+
+This is just a basic html page layout with a with a few classes for styles. I am also importing Roboto from google fonts.
+
+- Next, create a file called styles.css in the same directory. Copy and paste the code below into that file.
+
+&nbsp;
+
+```
+* {
+ box-sizing: border-box;
+}
+
+body {
+ font-family: 'Roboto', sans-serif;
+ margin: 0;
+ padding: 0;
+ min-height: 100vh;
+ background-image: linear-gradient(109.6deg, rgba(223, 234, 247, 1) 11.2%, rgba(244, 248, 252, 1) 91.1%);
+ background-repeat: no-repeat;
+}
+
+.container {
+ max-width: 1200px;
+ margin: auto;
+ padding-left: 15px;
+ padding-right: 15px;
+}
+
+.container h1 {
+ text-align: center;
+}
+
+.container h2 {
+ margin-top: 40px;
+ margin-bottom: 40px;
+ text-align: center;
+}
+
+.custom-list {
+ list-style: none;
+ padding: 0;
+ display: grid;
+ grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+ grid-gap: 15px;
+}
+
+.custom-list li {
+ background: rgba(200, 200, 200, 0.9);
+ font-weight: 300;
+ font-style: italic;
+ display: flex;
+ font-size: 18px;
+ align-items: center;
+ justify-content: center;
+ text-align: center;
+ padding: 20px;
+ min-height: 200px;
+ border-radius: 5px;
+ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+```
+
+&nbsp;
+
+After saving the changes, open up the code in your browser. You can do this in vsCode by right clicking on index.html and selecting open in default browser.
+Now you can see our amazing site (or maybe just ok). Go ahead and turn on pesticide so you can see more details about the layout.
+
+Looks ok but if you look again closely, you will see there is a problem. The `<body>` tag in the css file is given a min-height of 100vh.
+However, the website is slight taller than 100vh. What might be causing this? If you look at pesticide you can see a hint, as the body is not at the top of the page.
+
+We can fix this problem by removing the margin from the h1 element. Then we can add padding to the top of the body so that the website looks the same without the added height.
+
+&nbsp;
+
+```
+body {
+ font-family: 'Roboto', sans-serif;
+ margin: 0;
+ padding: 16px 0 0 0; // new values for padding
+ min-height: 100vh;
+ background-image: linear-gradient(109.6deg, rgba(223, 234, 247, 1) 11.2%, rgba(244, 248, 252, 1) 91.1%);
+ background-repeat: no-repeat;
+}
+
+.container h1 {
+ margin-top: 0; // remove margin for h1 element
+ text-align: center;
+}
+```
+
+&nbsp;
+
+Refresh the browser and you will see we fixed the problem. The website looks the same but now is only as tall as the browser window.
+Go ahead and play around with the file by adding new elements and styles to the page.
+Toggle pesticide on and off as you build to help assist with layouts and the visual design of the page.
+
+That's it, pretty straight foward and easy to use. I hope you enjoy [Pesticide](https://chrome.google.com/webstore/detail/pesticide-for-chrome-with/neonnmencpneifkhlmhmfhfiklgjmloi?hl=en-US) as much as I do and can use it on your future projects!
 
 </BlogLayout>

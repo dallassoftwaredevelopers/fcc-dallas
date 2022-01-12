@@ -6,6 +6,7 @@ import blogStyles from '~/styles/pages/blog.css';
 import { BlogAttributes } from './blogs';
 // blogs go here
 import * as websiteRewrite from './blogs/website-rewrite.mdx';
+import * as pesticideExtension from './blogs/pesticide-extension.mdx';
 
 export const headers: HeadersFunction = () => ({
   'cache-control': 'public, max-age=1800, s-maxage=86400, stale-while-revalidate=31536000',
@@ -29,7 +30,7 @@ const postFromModule = (mod: typeof websiteRewrite) => {
 };
 
 export const loader: LoaderFunction = () => {
-  return [postFromModule(websiteRewrite)];
+  return [postFromModule(websiteRewrite), postFromModule(pesticideExtension)];
 };
 
 const Blog = () => {
@@ -39,11 +40,9 @@ const Blog = () => {
     <StaticContentLayout wide title="Blog" showConnectWith>
       <ul className="cards-layout">
         {posts.map((post) => (
-          <>
-            <li key={post.slug}>
-              <BlogCard {...post} />
-            </li>
-          </>
+          <li key={post.slug}>
+            <BlogCard {...post} />
+          </li>
         ))}
       </ul>
     </StaticContentLayout>
