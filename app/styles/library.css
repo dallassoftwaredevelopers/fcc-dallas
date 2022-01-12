@@ -1,0 +1,22 @@
+/* library folder's css */
+.fccd-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary);
+  color: white;
+  cursor: pointer;
+  border: 0;
+}
+
+.fccd-button:hover {
+  opacity: 0.8;
+}
+
+.fccd-input {
+  display: block;
+  padding: 0.5rem 1rem;
+  outline: var(--primary);
+}
+
+.fccd-label-text {
+  margin-bottom: 0.25rem;
+}

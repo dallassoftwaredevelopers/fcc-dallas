@@ -1,0 +1,11 @@
+/build/*
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=31536000, immutable
+
+/img/*
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=31536000, immutable
+
+/favicon.ico
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=31536000, immutable

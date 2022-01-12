@@ -1,0 +1,17 @@
+.activity-img {
+  width: 350px;
+  max-width: 100%;
+}
+
+.activity-txt {
+  width: 100%;
+}
+
+@media (min-width: 1050px) {
+  .activity-txt {
+    width: 50%;
+  }
+  .activity-right {
+    text-align: right;
+  }
+}

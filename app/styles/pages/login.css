@@ -1,0 +1,8 @@
+.login-center {
+  display: grid;
+  place-content: center;
+}
+.login-container {
+  border: 1px dashed var(--primary-dark);
+  padding: 1rem;
+}

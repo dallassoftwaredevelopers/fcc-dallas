@@ -1,0 +1,9 @@
+.cohorts-img {
+  max-width: 100%;
+  display: block;
+  margin: auto;
+}
+
+.cohorts-list {
+  list-style-image: url(/img/check-mark.png);
+}

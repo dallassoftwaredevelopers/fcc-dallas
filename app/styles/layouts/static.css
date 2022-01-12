@@ -1,0 +1,118 @@
+.header-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--primary-dark);
+  color: var(--font-light);
+}
+
+.header-wrap a {
+  display: flex;
+}
+
+.header-links {
+  list-style-type: none;
+  display: flex;
+  gap: 1.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.header-links a {
+  text-decoration: none;
+}
+
+.header-links li:hover {
+  text-decoration: underline;
+}
+
+.header-logo {
+  width: 200px;
+}
+
+/* Imported into PublicNav */
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  cursor: pointer;
+  padding: 8px;
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  z-index: 100;
+}
+.hamburger-line {
+  height: 2px;
+  width: 20px;
+  background-color: white;
+  transition: all 0.2s;
+}
+.hamburger-open .hamburger-line {
+  background-color: white;
+}
+.hamburger-open .line1 {
+  transform: rotate(45deg) translateX(7px);
+}
+.hamburger-open .line2 {
+  width: 0;
+}
+.hamburger-open .line3 {
+  transform: rotate(-45deg) translateX(7px);
+}
+.hamburger-white {
+  background-color: white;
+}
+.hamburger-drawer {
+  width: 320px;
+  max-width: 100%;
+  position: fixed;
+  top: 0;
+  right: -325px;
+  height: 100vh;
+  background-color: var(--primary);
+  border-left: 1px solid var(--primary);
+  color: white;
+  transition: all 0.2s;
+  box-shadow: -7px 2px 7px rgba(0, 0, 0, 0.5);
+  padding: 1em;
+  box-sizing: border-box;
+}
+.hamburger-drawer-open {
+  right: 0;
+}
+
+@media (min-width: 800px) {
+  .header-logo {
+    width: 250px;
+  }
+  .header-wrap {
+    padding: 1rem 2rem;
+  }
+  .hamburger-menu {
+    top: 16px;
+  }
+}
+
+@media (min-width: 1050px) {
+  .hamburger-menu,
+  .hamburger-drawer {
+    display: none;
+  }
+  .header-links {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 16px;
+    padding: 0;
+    width: auto;
+  }
+
+  .white-links a {
+    color: white;
+  }
+}

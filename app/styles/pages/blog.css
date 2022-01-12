@@ -1,0 +1,22 @@
+.cards-layout {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style-type: none;
+  padding: 0;
+}
+
+.cards-layout li {
+  max-width: 100%;
+}
+
+.blog-card {
+  max-width: 100%;
+  width: 400px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.blog-card-body {
+  padding: 1rem;
+}
