@@ -1,3 +1,9 @@
 .blogs-wrapper {
   margin: 2rem 0;
 }
+
+pre,
+code {
+  max-width: 100%;
+  overflow-x: auto;
+}
