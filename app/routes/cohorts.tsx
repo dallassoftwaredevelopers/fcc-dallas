@@ -1,33 +1,33 @@
-import { HeadersFunction, LinksFunction, MetaFunction } from "remix";
-import ExternalLink from "~/components/ExternalLink";
-import { SocialMediaLinks } from "~/constants/external-links";
-import StaticContentLayout from "~/layouts/StaticContentLayout";
-import Divider from "~/library/components/Divider";
-import { H1, H2, H3, P } from "~/library/components/Typography";
-import staticStyles from "~/styles/layouts/static.css";
-import cohortsStyles from "~/styles/pages/cohorts.css";
+import { HeadersFunction, LinksFunction, MetaFunction } from 'remix';
+import ExternalLink from '~/components/ExternalLink';
+import { SocialMediaLinks } from '~/constants/external-links';
+import StaticContentLayout from '~/layouts/StaticContentLayout';
+import Divider from '~/library/components/Divider';
+import { H1, H2, H3, P } from '~/library/components/Typography';
+import staticStyles from '~/styles/layouts/static.css';
+import cohortsStyles from '~/styles/pages/cohorts.css';
 
 export const headers: HeadersFunction = () => ({
-  "cache-control":
-    "public, max-age=1800, s-maxage=86400, stale-while-revalidate=31536000",
+  'cache-control':
+    'public, max-age=1800, s-maxage=86400, stale-while-revalidate=31536000',
 });
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: staticStyles },
-  { rel: "stylesheet", href: cohortsStyles },
+  { rel: 'stylesheet', href: staticStyles },
+  { rel: 'stylesheet', href: cohortsStyles },
 ];
 
 export const meta: MetaFunction = () => ({
-  title: "Cohorts",
-  description: "Cohorts are for campers to build projects together",
+  title: 'Cohorts',
+  description: 'Cohorts are for campers to build projects together',
 });
 
-const Cohorts = () => {
+function Cohorts() {
   return (
     <StaticContentLayout>
       <H1 center>Cohorts</H1>
       <H2 center>Collaborate on a Project</H2>
-      <img className="cohorts-img" src="/img/cohort-team.svg" />
+      <img alt="cohorts" className="cohorts-img" src="/img/cohort-team.svg" />
       <Divider />
       <H3>What are Cohorts?</H3>
       <P>
@@ -51,8 +51,12 @@ const Cohorts = () => {
         are trying to get their first web development job as it will quickly
         accelerate your job readiness.
       </P>
-      <img className="cohorts-img" src="/img/cohorts-1.jpeg" />
-      <H3 style={{ marginTop: "2rem" }}>What you'll learn</H3>
+      <img
+        alt="coding together"
+        className="cohorts-img"
+        src="/img/cohorts-1.jpeg"
+      />
+      <H3 style={{ marginTop: '2rem' }}>What you'll learn</H3>
       <P>
         No matter what level you're at, you will almost always learn something
         new when you participate in Cohorts. It's difficult to list specifically
@@ -67,24 +71,24 @@ const Cohorts = () => {
       </ul>
       <H3>How to Join</H3>
       <P>
-        To join the next available cohort, just on{" "}
+        To join the next available cohort, just on{' '}
         <ExternalLink href={SocialMediaLinks.DISCORD}>Discord</ExternalLink> and
         join the cohorts channel. Once there, introduce yourself and let us know
         technologies you're currently working on so we can place you on a team.
       </P>
       <Divider />
       <div>
-        Icons made by{" "}
+        Icons made by{' '}
         <a href="https://www.flaticon.com/authors/octopocto" title="Octopocto">
           Octopocto
-        </a>{" "}
-        from{" "}
+        </a>{' '}
+        from{' '}
         <a href="https://www.flaticon.com/" title="Flaticon">
           www.flaticon.com
         </a>
       </div>
     </StaticContentLayout>
   );
-};
+}
 
 export default Cohorts;

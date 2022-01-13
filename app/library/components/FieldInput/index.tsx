@@ -1,19 +1,17 @@
-import * as React from "react";
-import ErrorMsg from "../ErrorMsg";
-import Input, { InputProps } from "../Input";
-import Label, { LabelProps } from "../Label";
+import * as React from 'react';
+import ErrorMsg from '../ErrorMsg';
+import Input, { InputProps } from '../Input';
+import Label, { LabelProps } from '../Label';
 
-type FieldIinputProps = InputProps & LabelProps;
+type FieldInputProps = InputProps & Omit<LabelProps, 'htmlFor'>;
 
-const FieldInput: React.FC<FieldIinputProps> = React.forwardRef(
-  (props, ref) => (
-    <>
-      <Label {...props}>
-        <Input ref={ref} {...props} />
-      </Label>
-      {!!props.errorMsg && <ErrorMsg>{props.errorMsg}</ErrorMsg>}
-    </>
-  )
-);
+const FieldInput: React.FC<FieldInputProps> = React.forwardRef((props, ref) => (
+  <>
+    <Label htmlFor={props.id} {...props}>
+      <Input ref={ref} {...props} />
+    </Label>
+    {!!props.errorMsg && <ErrorMsg>{props.errorMsg}</ErrorMsg>}
+  </>
+));
 
 export default FieldInput;

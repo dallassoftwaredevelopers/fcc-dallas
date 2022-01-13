@@ -1,37 +1,37 @@
-import { HeadersFunction, Link, LinksFunction, MetaFunction } from "remix";
-import ExternalLink from "~/components/ExternalLink";
-import { EducationalLinks } from "~/constants/external-links";
-import ContentMarginsLayout from "~/layouts/ContentMarginsLayout";
-import StaticContentLayout from "~/layouts/StaticContentLayout";
-import { H3, P } from "~/library/components/Typography";
-import staticStyles from "~/styles/layouts/static.css";
-import aboutUsStyles from "~/styles/pages/about-us.css";
+import { HeadersFunction, Link, LinksFunction, MetaFunction } from 'remix';
+import ExternalLink from '~/components/ExternalLink';
+import { EducationalLinks } from '~/constants/external-links';
+import ContentMarginsLayout from '~/layouts/ContentMarginsLayout';
+import StaticContentLayout from '~/layouts/StaticContentLayout';
+import { H3, P } from '~/library/components/Typography';
+import staticStyles from '~/styles/layouts/static.css';
+import aboutUsStyles from '~/styles/pages/about-us.css';
 
 export const headers: HeadersFunction = () => ({
-  "cache-control":
-    "public, max-age=1800, s-maxage=86400, stale-while-revalidate=31536000",
+  'cache-control':
+    'public, max-age=1800, s-maxage=86400, stale-while-revalidate=31536000',
 });
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: staticStyles },
-  { rel: "stylesheet", href: aboutUsStyles },
+  { rel: 'stylesheet', href: staticStyles },
+  { rel: 'stylesheet', href: aboutUsStyles },
 ];
 
 export const meta: MetaFunction = () => ({
-  title: "About us",
-  description: "Learn about fCC Dallas",
+  title: 'About us',
+  description: 'Learn about fCC Dallas',
 });
 
-const AboutUs = () => {
+function AboutUs() {
   return (
     <StaticContentLayout title="About Us" wide showConnectWith>
       <ContentMarginsLayout>
         <H3>What is freeCodeCamp Dallas?</H3>
         <P>
-          We are the Dallas study group for{" "}
+          We are the Dallas study group for{' '}
           <ExternalLink href={EducationalLinks.FREECODECAMP}>
             freeCodeCamp.
-          </ExternalLink>{" "}
+          </ExternalLink>{' '}
           freeCodeCamp is a non profit that offers free, online, interactive
           coding courses. As a study group, we are a community of learners
           dedicated to helping one another achieve our code related goals. Many
@@ -50,7 +50,7 @@ const AboutUs = () => {
           src="/img/whiteboard.svg"
           alt="whiteboarding"
         />
-        <H3 style={{ marginTop: "1rem" }}>What we do</H3>
+        <H3 style={{ marginTop: '1rem' }}>What we do</H3>
         <P>
           Check out our <Link to="/get-started">get started page</Link> to learn
           more about how to get involved with freeCodeCamp Dallas. Our goal is
@@ -64,6 +64,6 @@ const AboutUs = () => {
       </ContentMarginsLayout>
     </StaticContentLayout>
   );
-};
+}
 
 export default AboutUs;

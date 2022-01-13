@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 export interface InputProps
   extends React.DetailedHTMLProps<
@@ -7,23 +7,23 @@ export interface InputProps
   > {
   fullWidth?: boolean;
   errorMsg?: string;
+  id: string; // required for label accessibility
 }
 
 const Input: React.FC<InputProps> = React.forwardRef(
-  ({ fullWidth, errorMsg, ...props }, ref) => {
-    return (
-      <input
-        ref={ref}
-        style={{
-          width: fullWidth ? "100%" : "auto",
-          outline: errorMsg ? "red" : "inherit",
-          ...props.style,
-        }}
-        className={`fccd-input${props.className ? ` ${props.className}` : ""}`}
-        {...props}
-      />
-    );
-  }
+  ({ fullWidth, errorMsg, id, ...props }, ref) => (
+    <input
+      id={id}
+      ref={ref}
+      style={{
+        width: fullWidth ? '100%' : 'auto',
+        outline: errorMsg ? 'red' : 'inherit',
+        ...props.style,
+      }}
+      className={`fccd-input${props.className ? ` ${props.className}` : ''}`}
+      {...props}
+    />
+  )
 );
 
 export default Input;

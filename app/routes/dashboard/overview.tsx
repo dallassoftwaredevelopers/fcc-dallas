@@ -1,12 +1,12 @@
-import * as React from "react";
-import { supabaseClient } from "~/db/supabase-client";
+import * as React from 'react';
+import { supabaseClient } from '~/db/supabase-client';
 
-const Overview = () => {
+function Overview() {
   // todo fix sign out
-  const logout = async (e: React.MouseEvent) => {
+  const logout = async () => {
     await supabaseClient?.auth?.signOut();
-    await fetch("/api/logout", {
-      method: "POST",
+    await fetch('/api/logout', {
+      method: 'POST',
     });
   };
   return (
@@ -17,6 +17,6 @@ const Overview = () => {
       </button>
     </div>
   );
-};
+}
 
 export default Overview;

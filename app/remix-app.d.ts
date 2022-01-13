@@ -1,4 +1,4 @@
-import { SupabaseClient } from "@supabase/supabase-js";
+import { SupabaseClient } from '@supabase/supabase-js';
 
 export type SupabaseScript = {
   createClient: (supabaseUrl: string, supabaseKey: string) => SupabaseClient;
