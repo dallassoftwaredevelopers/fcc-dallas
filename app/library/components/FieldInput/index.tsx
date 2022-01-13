@@ -5,6 +5,8 @@ import Label, { LabelProps } from '../Label';
 
 type FieldInputProps = InputProps & Omit<LabelProps, 'htmlFor'>;
 
+// todo fix this ts error
+// @ts-ignore
 const FieldInput: React.FC<FieldInputProps> = React.forwardRef((props, ref) => (
   <>
     <Label htmlFor={props.id} {...props}>

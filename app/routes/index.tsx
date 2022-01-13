@@ -63,19 +63,16 @@ export default function Index() {
       <ContentMarginsLayout wide>
         <Row justifyContent="center">
           <ContentCard
-            img=""
             title="Learn Code"
             description="The best way to learn to code is with a community of learners. Our members include learners at all levels to include people who 
             know almost nothing working alongside of professional software engineers trying to improve their craft and help others."
           />
           <ContentCard
-            img=""
             title="Try a Meetup"
             description="Our monthly online meet ups are a great way to learn and connect. Our talks are generally led by professional software engineers 
             that are passionate about passing their knowledge along."
           />
           <ContentCard
-            img=""
             title="Join Cohorts"
             description="Level up your skills by building a project with other learners. Mentors are readily available to help guide you as you build your project.
             Cohort teams generally last around 2 months at a time and showcase their projects at a monthly meetup."

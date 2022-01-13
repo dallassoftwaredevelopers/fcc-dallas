@@ -4,3 +4,5 @@ node_modules
 build
 functions
 public
+package.json
+tsconfig.json

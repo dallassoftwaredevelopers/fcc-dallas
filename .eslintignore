@@ -5,3 +5,5 @@ build
 functions
 public
 remix-app.d.ts
+package.json
+tsconfig.json

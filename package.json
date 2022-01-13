@@ -1,8 +1,7 @@
 {
   "private": true,
-  "name": "remix-app-template",
-  "description": "",
-  "license": "",
+  "name": "fcc-dallas",
+  "description": "fcc dallas website",
   "scripts": {
     "build": "cross-env NODE_ENV=production remix build",
     "dev": "cross-env NODE_ENV=development run-p dev:*",
@@ -10,7 +9,7 @@
     "dev:remix": "remix watch",
     "dev:wrangler": "wrangler pages dev ./public --watch ./public",
     "start": "npm run dev:wrangler",
-    "lint": "eslint .",
+    "lint:staged": "eslint",
     "check-types": "tsc",
     "format": "prettier-eslint --write \"./**/*.{ts,tsx,js,jsx,json,yaml}\"",
     "format:staged": "git-format-staged -f \"prettier --write --stdin-filepath \"{}\"\" \"*.ts\" \"*.tsx\""
