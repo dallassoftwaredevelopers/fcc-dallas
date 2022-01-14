@@ -1,11 +1,12 @@
 :root {
+  --primary-accent: #e3ffe3;
   --primary: #006400;
   --primary-dark: #002400;
 
   --font-light: #fff;
   --font-dark: #333;
-  --font-body: -apple-system, "Segoe UI", Helvetica Neue, Helvetica, Roboto,
-    Arial, sans-serif, system-ui, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-body: -apple-system, 'Segoe UI', Helvetica Neue, Helvetica, Roboto,
+    Arial, sans-serif, system-ui, 'Apple Color Emoji', 'Segoe UI Emoji';
 }
 
 html {

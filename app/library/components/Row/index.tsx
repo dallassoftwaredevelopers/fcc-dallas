@@ -7,6 +7,7 @@ interface RowProps {
   flexDirection?: React.CSSProperties['flexDirection'];
   flexWrap?: React.CSSProperties['flexWrap'];
   gap?: React.CSSProperties['gap'];
+  style?: React.CSSProperties;
 }
 
 const Row: React.FC<RowProps> = ({
@@ -16,6 +17,7 @@ const Row: React.FC<RowProps> = ({
   flexWrap = 'wrap',
   gap = '1rem',
   children,
+  style = {},
 }) => (
   <div
     style={{
@@ -25,6 +27,7 @@ const Row: React.FC<RowProps> = ({
       justifyContent,
       alignItems,
       flexDirection,
+      ...style,
     }}
   >
     {children}

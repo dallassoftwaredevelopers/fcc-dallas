@@ -1,0 +1,35 @@
+/* global dashboard styles; route specific will go in routes folder */
+
+.dashboard-logo {
+  background-color: var(--primary-dark);
+  padding: 1rem;
+  margin: 1rem;
+  max-width: 100%;
+  width: 300px;
+}
+
+.dashboard-content-wrap {
+  width: 100%;
+}
+
+.dashboard-side-option {
+  padding: 0.5rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+.dashboard-side-option--selected {
+  background-color: var(--primary-accent);
+}
+
+.dashboard-side-option:hover {
+  background-color: var(--primary-accent);
+}
+
+.dashboard-side-option a {
+  text-decoration: none;
+}
+
+.dashboard-side-option a:hover {
+  text-decoration: underline;
+}
