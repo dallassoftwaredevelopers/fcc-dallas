@@ -36,7 +36,7 @@ export const loader: LoaderFunction = async () => {
   const isLoggedIn = await isAuthenticated();
   if (isLoggedIn) {
     // reneable one we fix logout
-    // return redirect("/dashboard/overview");
+    // return redirect("/dashboard/home");
   }
   return null;
 };
@@ -55,7 +55,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   const { session, error } = await supabase.auth.signIn({ email, password });
   if (session) {
-    return redirect('/dashboard/overview', {
+    return redirect('/dashboard/home', {
       headers: {
         'Set-Cookie': await supabaseToken.serialize(session.access_token, {
           expires: new Date(session?.expires_at!),
