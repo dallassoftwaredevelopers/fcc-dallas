@@ -30,6 +30,11 @@
   text-decoration: none;
 }
 
+.dashboard-side-option svg {
+  width: 1.25rem;
+  max-width: 100%;
+}
+
 .dashboard-side-option a:hover {
   text-decoration: underline;
 }

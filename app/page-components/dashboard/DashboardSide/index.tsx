@@ -23,7 +23,7 @@ const DashboardSide = () => {
         minHeight: '100vh',
         width: '300px',
         padding: '1rem',
-        boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.3);',
+        boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.3)s',
       }}
     >
       <Row flexDirection="column" style={{ width: '100%' }}>

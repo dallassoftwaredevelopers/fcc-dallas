@@ -8,6 +8,7 @@ interface RowProps {
   flexWrap?: React.CSSProperties['flexWrap'];
   gap?: React.CSSProperties['gap'];
   style?: React.CSSProperties;
+  className?: string;
 }
 
 const Row: React.FC<RowProps> = ({
@@ -18,8 +19,10 @@ const Row: React.FC<RowProps> = ({
   gap = '1rem',
   children,
   style = {},
+  className = '',
 }) => (
   <div
+    className={className}
     style={{
       display: 'flex',
       flexWrap,
