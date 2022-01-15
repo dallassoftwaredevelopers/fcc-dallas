@@ -4,6 +4,7 @@ import { match } from 'ts-pattern';
 interface TypographyProps {
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
   center?: boolean;
+  noMargin?: boolean;
   style?: React.CSSProperties;
   className?: string;
   bold?: boolean;
@@ -15,6 +16,7 @@ const Typography: React.FC<TypographyProps> = ({
   type,
   center,
   className,
+  noMargin,
   bold,
   style = {},
 }) => {
@@ -25,6 +27,9 @@ const Typography: React.FC<TypographyProps> = ({
   }
   if (bold) {
     internalStyle.fontWeight = '700';
+  }
+  if (noMargin) {
+    internalStyle.margin = '0';
   }
 
   const sharedProps = { className, style: internalStyle };

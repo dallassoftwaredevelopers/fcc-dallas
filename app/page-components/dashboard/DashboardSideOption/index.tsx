@@ -1,4 +1,4 @@
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { Link, useLocation } from 'remix';
@@ -9,12 +9,14 @@ import { applyIfTrue } from '~/utils';
 interface DashboardSideOptionProps {
   to?: string;
   onClick?: () => void;
+  icon?: IconDefinition;
 }
 
 const DashboardSideOption: React.FC<DashboardSideOptionProps> = ({
   children,
   to,
   onClick,
+  icon,
 }) => {
   const location = useLocation();
   const isSelected = to ? location.pathname.includes(to) : false;
@@ -26,10 +28,10 @@ const DashboardSideOption: React.FC<DashboardSideOptionProps> = ({
         'dashboard-side-option--selected'
       )}`}
     >
-      <FontAwesomeIcon icon={faCoffee} />
+      {icon && <FontAwesomeIcon icon={icon} />}
       {to && (
         <Link to={to} prefetch="intent">
-          <H3>{children}</H3>
+          <H3 noMargin>{children}</H3>
         </Link>
       )}
       {onClick && (

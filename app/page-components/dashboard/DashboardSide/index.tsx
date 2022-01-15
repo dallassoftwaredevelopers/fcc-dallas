@@ -1,3 +1,4 @@
+import { faHome, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import * as React from 'react';
 import { useNavigate } from 'remix';
 import { supabaseClient } from '~/db/supabase-client';
@@ -23,25 +24,25 @@ const DashboardSide = () => {
         minHeight: '100vh',
         width: '300px',
         padding: '1rem',
-        boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.3)s',
+        boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.3)',
       }}
     >
       <Row flexDirection="column" style={{ width: '100%' }}>
-        <DashboardSideOption to="/dashboard/overview">
-          Overview
+        <DashboardSideOption to="/dashboard/home" icon={faHome}>
+          Home
         </DashboardSideOption>
-        <DashboardSideOption to="/dashboard/mentors">
+        <DashboardSideOption to="/dashboard/cohorts" icon={faTrophy}>
+          Cohorts
+        </DashboardSideOption>
+        {/* <DashboardSideOption to="/dashboard/mentors">
           Mentors
         </DashboardSideOption>
         <DashboardSideOption to="/dashboard/project-wall">
           My Projects Wall
         </DashboardSideOption>
-        <DashboardSideOption to="/dashboard/cohorts">
-          Cohorts
-        </DashboardSideOption>
         <DashboardSideOption to="/dashboard/mock-interviews">
           Mock Interviews
-        </DashboardSideOption>
+        </DashboardSideOption> */}
       </Row>
       <Row flexDirection="column" style={{ width: '100%' }}>
         <DashboardSideOption onClick={logout}>Logout</DashboardSideOption>
