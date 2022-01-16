@@ -27,3 +27,5 @@ rules:
   react/no-unescaped-entities: 0
   max-classes-per-file: 0
   no-use-before-define: 0
+  react/destructuring-assignment: 0
+  no-console: 0

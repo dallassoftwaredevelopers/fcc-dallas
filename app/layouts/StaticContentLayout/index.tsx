@@ -30,7 +30,6 @@ const StaticContentLayout: React.FC<StaticContentLayoutProps> = ({
           <Divider />
         </>
       )}
-
       {children}
     </ContentMarginsLayout>
   </StaticLayout>

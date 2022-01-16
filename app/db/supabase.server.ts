@@ -1,10 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
 
-declare global {
-  var SB_URL: string;
-  var SB_ANON_KEY: string;
-}
-
 // these are publicly accessible values
 const SB_URL = 'https://lrgeyudqmvvomgpvkzkf.supabase.co';
 const SB_ANON_KEY =

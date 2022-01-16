@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Links,
+  LinksFunction,
   LiveReload,
   LoaderFunction,
   Meta,
@@ -16,7 +17,7 @@ import { Error401, Error404, Error500s } from './components/Error';
 import styles from './styles/global.css';
 import libraryStyles from './styles/library.css';
 
-export const links = () => [
+export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: styles },
   { rel: 'stylesheet', href: libraryStyles },
 ];

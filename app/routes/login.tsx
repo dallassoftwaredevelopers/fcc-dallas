@@ -45,7 +45,6 @@ export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
   const email = form.get('email');
   const password = form.get('password');
-  console.log('email', email);
   if (typeof email !== 'string' || typeof password !== 'string') {
     return json({
       message: 'Invalid login payload',
