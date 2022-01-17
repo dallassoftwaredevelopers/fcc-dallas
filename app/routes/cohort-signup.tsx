@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
+import { format } from 'date-fns';
 import * as React from 'react';
-import { useForm, useFormState } from 'react-hook-form';
+import { Controller, useForm, useFormState } from 'react-hook-form';
 import {
   ActionFunction,
   json,
@@ -12,21 +13,22 @@ import {
 } from 'remix';
 import { supabase } from '~/db/supabase.server';
 import StaticContentLayout from '~/layouts/StaticContentLayout';
-import FieldInput from '~/library/components/FieldInput';
-import { H2 } from '~/library/components/Typography';
-import { areAllDefined, isDefined } from '~/utils';
-import staticStyles from '~/styles/layouts/static.css';
-import Divider from '~/library/components/Divider';
-import RadioGroup from '~/library/components/RadioGroup';
-import RadioButton from '~/library/components/RadioButton';
 import Button from '~/library/components/Button';
-import Row from '~/library/components/Row';
+import Divider from '~/library/components/Divider';
 import ErrorMsg from '~/library/components/ErrorMsg';
+import FieldInput from '~/library/components/FieldInput';
+import RadioButton from '~/library/components/RadioButton';
+import RadioGroup from '~/library/components/RadioGroup';
+import Row from '~/library/components/Row';
+import { H2, P } from '~/library/components/Typography';
+import staticStyles from '~/styles/layouts/static.css';
+import { areAllDefined, isDefined } from '~/utils';
 
 interface CohortSignUpForm {
   cohortId: string;
   firstName: string;
   lastName: string;
+  email: string;
   preferredStack: string;
   role: 'FE' | 'BE' | 'FS' | 'UX';
   wantsToLead: boolean;
@@ -37,6 +39,8 @@ interface LoaderData {
   cohort: {
     id?: string;
     name: string;
+    start_date: Date;
+    end_date: Date;
   };
   errorParam?: string;
   error?: string;
@@ -50,7 +54,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   try {
     const futureCohorts = await supabase
       .from('cohort')
-      .select('name, id')
+      .select('name, id, start_date, end_date')
       .gt('start_date', new Date().toISOString())
       .limit(1);
 
@@ -102,8 +106,9 @@ export const action: ActionFunction = async ({ request }) => {
   const cohort_fk = form.get('cohortId');
   const first_name = form.get('firstName');
   const last_name = form.get('lastName');
+  const email = form.get('email');
   const preferred_stack = form.get('preferredStack');
-  const role = form.get('role');
+  const role = form.get('role') ?? null;
   const leader = form.get('wantsToLead') === 'true';
   const previously_participated = form.get('previouslyParticipated') === 'true';
 
@@ -115,6 +120,7 @@ export const action: ActionFunction = async ({ request }) => {
     !areAllDefined(
       first_name,
       last_name,
+      email,
       preferred_stack,
       role,
       leader,
@@ -130,6 +136,7 @@ export const action: ActionFunction = async ({ request }) => {
       cohort_fk,
       first_name,
       last_name,
+      email,
       preferred_stack,
       role,
       leader,
@@ -140,7 +147,8 @@ export const action: ActionFunction = async ({ request }) => {
       return redirect('/cohort-signup?error=dbError', result.status);
     }
   } catch (e) {
-    console.error(e);
+    console.error('Error', e);
+    return redirect('/cohort-signup?error=error', 500);
   }
   return redirect('/cohort-signup-success');
 };
@@ -174,6 +182,16 @@ const CohortSignUp = () => {
       <H2>
         Apply for <strong>{loaderData.cohort.name}</strong>
       </H2>
+      <Row gap={16}>
+        <P style={{ marginBottom: 0 }}>
+          <strong>Start Date:</strong>{' '}
+          {format(new Date(loaderData.cohort.start_date), 'MMMM dd, yyyy')}
+        </P>
+        <P style={{ marginBottom: 0 }}>
+          <strong>End Date:</strong>{' '}
+          {format(new Date(loaderData.cohort.end_date), 'MMMM dd, yyyy')}
+        </P>
+      </Row>
       <Divider />
       {loaderData.errorParam && (
         <ErrorMsg>
@@ -212,6 +230,22 @@ const CohortSignUp = () => {
           })}
         />
         <FieldInput
+          label="Email"
+          id="email-field"
+          fullWidth
+          errorMsg={isDefined(errors.email) ? errors.email.message : ''}
+          {...register('email', {
+            required: {
+              value: true,
+              message: 'Email is required',
+            },
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: 'Email must be valid',
+            },
+          })}
+        />
+        <FieldInput
           label="Preferred Stack"
           id="preferred-stack"
           fullWidth
@@ -227,75 +261,119 @@ const CohortSignUp = () => {
             },
           })}
         />
-        <RadioGroup
-          label="Which is your preferred role on a project?"
-          errorMsg={isDefined(errors.role) ? errors.role.message : ''}
-        >
-          <RadioButton
-            {...register('role')}
-            label="Front End"
-            id="role-fe"
-            value="FE"
-          />
-          <RadioButton
-            {...register('role')}
-            label="Back End"
-            id="role-be"
-            value="BE"
-          />
-          <RadioButton
-            {...register('role')}
-            label="Full Stack"
-            id="role-fs"
-            value="FS"
-          />
-          <RadioButton
-            {...register('role')}
-            label="UI/UX Designer"
-            id="role-ux"
-            value="UX"
-          />
-        </RadioGroup>
-        <RadioGroup
-          label="Would you be interested in leading a team?"
-          errorMsg={
-            isDefined(errors.wantsToLead) ? errors.wantsToLead.message : ''
-          }
-        >
-          <RadioButton
-            {...register('wantsToLead')}
-            label="Yes"
-            id="wants-to-lead-yes"
-            value="true"
-          />
-          <RadioButton
-            {...register('wantsToLead')}
-            label="No"
-            id="wants-to-lead-no"
-            value="false"
-          />
-        </RadioGroup>
-        <RadioGroup
-          label="Have you participated in a previous cohort?"
-          errorMsg={
-            isDefined(errors.previouslyParticipated)
-              ? errors.previouslyParticipated.message
-              : ''
-          }
-        >
-          <RadioButton
-            {...register('previouslyParticipated')}
-            label="Yes"
-            id="prev-participated-yes"
-            value="true"
-          />
-          <RadioButton
-            {...register('previouslyParticipated')}
-            label="No"
-            id="prev-participated-no"
-            value="false"
-          />
-        </RadioGroup>
+        <Controller
+          control={control}
+          name="role"
+          rules={{
+            required: {
+              value: true,
+              message: 'Preferred Role is required',
+            },
+          }}
+          render={({ field: { name, onChange } }) => (
+            <RadioGroup
+              label="Which is your preferred role on a project?"
+              errorMsg={isDefined(errors.role) ? errors.role.message : ''}
+            >
+              <RadioButton
+                onChange={onChange}
+                name={name}
+                label="Front End"
+                id="role-fe"
+                value="FE"
+              />
+              <RadioButton
+                onChange={onChange}
+                name={name}
+                label="Back End"
+                id="role-be"
+                value="BE"
+              />
+              <RadioButton
+                onChange={onChange}
+                name={name}
+                label="Full Stack"
+                id="role-fs"
+                value="FS"
+              />
+              <RadioButton
+                onChange={onChange}
+                name={name}
+                label="UI/UX Designer"
+                id="role-ux"
+                value="UX"
+              />
+            </RadioGroup>
+          )}
+        />
+        <Controller
+          control={control}
+          name="wantsToLead"
+          rules={{
+            required: {
+              value: true,
+              message: 'Leadership preference is required',
+            },
+          }}
+          render={({ field: { name, onChange } }) => (
+            <RadioGroup
+              label="Would you be interested in leading a team?"
+              errorMsg={
+                isDefined(errors.wantsToLead) ? errors.wantsToLead.message : ''
+              }
+            >
+              <RadioButton
+                onChange={onChange}
+                name={name}
+                label="Yes"
+                id="wants-to-lead-yes"
+                value="true"
+              />
+              <RadioButton
+                onChange={onChange}
+                name={name}
+                label="No"
+                id="wants-to-lead-no"
+                value="false"
+              />
+            </RadioGroup>
+          )}
+        />
+        <Controller
+          control={control}
+          name="previouslyParticipated"
+          rules={{
+            required: {
+              value: true,
+              message: 'Previously participated is required',
+            },
+          }}
+          render={({ field: { name, onChange } }) => (
+            <RadioGroup
+              label="Have you participated in a previous cohort?"
+              errorMsg={
+                isDefined(errors.previouslyParticipated)
+                  ? errors.previouslyParticipated.message
+                  : ''
+              }
+            >
+              <RadioButton
+                onChange={onChange}
+                name={name}
+                label="Yes"
+                id="prev-participated-yes"
+                value="true"
+              />
+              <RadioButton
+                onChange={onChange}
+                name={name}
+                label="No"
+                id="prev-participated-no"
+                value="false"
+              />
+            </RadioGroup>
+          )}
+        />
         <Row justifyContent="flex-end">
           <Button size="m" type="submit">
             Submit
