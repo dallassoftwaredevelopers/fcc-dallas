@@ -45,44 +45,51 @@ export const links: LinksFunction = () => [
 ];
 
 export const loader: LoaderFunction = async () => {
-  const futureCohorts = await supabase
-    .from('cohort')
-    .select('name, id')
-    .gt('start_date', new Date().toISOString())
-    .limit(1);
+  try {
+    const futureCohorts = await supabase
+      .from('cohort')
+      .select('name, id')
+      .gt('start_date', new Date().toISOString())
+      .limit(1);
 
-  if (futureCohorts.error) {
-    console.error(
-      'Cohorts Form Error Database Fetch Error:',
-      futureCohorts.error
-    );
-    return json(
-      {
-        cohort: '',
-        error: 'Unexpected error retrieving cohort information',
-      },
-      futureCohorts.status
-    );
+    if (futureCohorts.error) {
+      console.error(
+        'Cohorts Form Error Database Fetch Error:',
+        futureCohorts.error
+      );
+      return json(
+        {
+          cohort: '',
+          error: 'Unexpected error retrieving cohort information',
+        },
+        futureCohorts.status
+      );
+    }
+
+    if (
+      !futureCohorts.body ||
+      !futureCohorts.body.length ||
+      !futureCohorts.body[0].name
+    ) {
+      console.warn('No new cohorts found');
+      return json(
+        {
+          cohort: '',
+          error: 'Unable to find future Cohort',
+        },
+        400
+      );
+    }
+
+    return json({
+      cohort: futureCohorts.body[0],
+    });
+  } catch (e) {
+    return json({
+      cohort: '',
+      error: `Unexpected error ${e}`,
+    });
   }
-
-  if (
-    !futureCohorts.body ||
-    !futureCohorts.body.length ||
-    !futureCohorts.body[0].name
-  ) {
-    console.warn('No new cohorts found');
-    return json(
-      {
-        cohort: '',
-        error: 'Unable to find future Cohort',
-      },
-      400
-    );
-  }
-
-  return json({
-    cohort: futureCohorts.body[0],
-  });
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -101,7 +108,6 @@ export const action: ActionFunction = async ({ request }) => {
     console.warn('Form submission missing cohorts ID');
     return redirect('/cohort-signup?error=missingId', 400);
   }
-  console.log(form);
   if (
     !areAllDefined(
       first_name,
