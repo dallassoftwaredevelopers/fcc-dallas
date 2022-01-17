@@ -19,7 +19,7 @@ export const links: LinksFunction = () => [
 
 export const meta: MetaFunction = () => ({
   title: 'About us',
-  description: 'Learn about fCC Dallas',
+  description: 'Learn about freeCodeCamp Dallas',
 });
 
 function AboutUs() {

@@ -1,8 +1,11 @@
+import { Link } from 'react-router-dom';
 import { HeadersFunction, LinksFunction, MetaFunction } from 'remix';
 import ExternalLink from '~/components/ExternalLink';
 import { SocialMediaLinks } from '~/constants/external-links';
 import StaticContentLayout from '~/layouts/StaticContentLayout';
+import Button from '~/library/components/Button';
 import Divider from '~/library/components/Divider';
+import Row from '~/library/components/Row';
 import { H1, H2, H3, P } from '~/library/components/Typography';
 import staticStyles from '~/styles/layouts/static.css';
 import cohortsStyles from '~/styles/pages/cohorts.css';
@@ -27,6 +30,11 @@ function Cohorts() {
     <StaticContentLayout>
       <H1 center>Cohorts</H1>
       <H2 center>Collaborate on a Project</H2>
+      <Row justifyContent="center" style={{ marginBottom: '1rem' }}>
+        <Link to="/cohort-signup">
+          <Button size="m">Sign Up for Next Cohort</Button>
+        </Link>
+      </Row>
       <img alt="cohorts" className="cohorts-img" src="/img/cohort-team.svg" />
       <Divider />
       <H3>What are Cohorts?</H3>

@@ -7,6 +7,7 @@ import {
   json,
   LinksFunction,
   LoaderFunction,
+  MetaFunction,
   redirect,
   useLoaderData,
   useSubmit,
@@ -49,6 +50,11 @@ interface LoaderData {
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: staticStyles },
 ];
+
+export const meta: MetaFunction = () => ({
+  title: 'Cohort Sign Up',
+  description: 'freeCodeCamp Dallas Cohort Sign Up',
+});
 
 export const loader: LoaderFunction = async ({ params }) => {
   try {
