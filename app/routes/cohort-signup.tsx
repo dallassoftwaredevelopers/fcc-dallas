@@ -21,6 +21,7 @@ import RadioGroup from '~/library/components/RadioGroup';
 import RadioButton from '~/library/components/RadioButton';
 import Button from '~/library/components/Button';
 import Row from '~/library/components/Row';
+import ErrorMsg from '~/library/components/ErrorMsg';
 
 interface CohortSignUpForm {
   cohortId: string;
@@ -37,6 +38,7 @@ interface LoaderData {
     id?: string;
     name: string;
   };
+  errorParam?: string;
   error?: string;
 }
 
@@ -44,7 +46,7 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: staticStyles },
 ];
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ params }) => {
   try {
     const futureCohorts = await supabase
       .from('cohort')
@@ -83,6 +85,7 @@ export const loader: LoaderFunction = async () => {
 
     return json({
       cohort: futureCohorts.body[0],
+      errorParams: params.error,
     });
   } catch (e) {
     return json({
@@ -139,7 +142,7 @@ export const action: ActionFunction = async ({ request }) => {
   } catch (e) {
     console.error(e);
   }
-  return redirect('/cohort-signup?success=true');
+  return redirect('/cohort-signup-success');
 };
 
 // todo need to figure react hook form validations for radio buttons
@@ -155,12 +158,15 @@ const CohortSignUp = () => {
       submit(e.currentTarget, { replace: true });
       return;
     }
-    console.log(Object.keys(errors));
     e.preventDefault();
   };
 
   if (!loaderData?.cohort?.name) {
-    return <H2>No upcoming Cohorts</H2>;
+    return (
+      <StaticContentLayout>
+        <H2>No upcoming Cohorts</H2>
+      </StaticContentLayout>
+    );
   }
 
   return (
@@ -169,6 +175,12 @@ const CohortSignUp = () => {
         Apply for <strong>{loaderData.cohort.name}</strong>
       </H2>
       <Divider />
+      {loaderData.errorParam && (
+        <ErrorMsg>
+          Failed to Submit Form. Please try again or contact us:{' '}
+          {loaderData.errorParam}
+        </ErrorMsg>
+      )}
       <form method="post" onSubmit={submitForm}>
         <input
           {...register('cohortId')}
