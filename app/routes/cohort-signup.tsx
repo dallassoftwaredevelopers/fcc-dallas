@@ -246,7 +246,7 @@ const CohortSignUp = () => {
           })}
         />
         <FieldInput
-          label="Preferred Stack"
+          label="Preferred Technology, Languages, or Frameworks"
           id="preferred-stack"
           fullWidth
           errorMsg={
