@@ -30,7 +30,6 @@ interface CohortSignUpForm {
   role: 'FE' | 'BE' | 'FS' | 'UX';
   wantsToLead: boolean;
   previouslyParticipated: boolean;
-  cohortId: string;
 }
 
 interface LoaderData {
@@ -43,7 +42,6 @@ interface LoaderData {
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: staticStyles },
-  // { rel: 'stylesheet', href: cohortsStyles },
 ];
 
 export const loader: LoaderFunction = async () => {
@@ -154,6 +152,10 @@ const CohortSignUp = () => {
     console.log(Object.keys(errors));
     e.preventDefault();
   };
+
+  if (!loaderData?.cohort?.name) {
+    return <H2>No upcoming Cohorts</H2>;
+  }
 
   return (
     <StaticContentLayout>
