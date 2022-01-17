@@ -138,16 +138,21 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   try {
-    const result = await supabase.from('cohort_application').insert({
-      cohort_fk,
-      first_name,
-      last_name,
-      email,
-      preferred_stack,
-      role,
-      leader,
-      previously_participated,
-    });
+    const result = await supabase.from('cohort_application').insert(
+      {
+        cohort_fk,
+        first_name,
+        last_name,
+        email,
+        preferred_stack,
+        role,
+        leader,
+        previously_participated,
+      },
+      {
+        returning: 'minimal',
+      }
+    );
     if (result.error) {
       console.log(result);
       return redirect('/cohort-signup?error=dbError', result.status);
