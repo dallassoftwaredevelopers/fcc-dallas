@@ -13,6 +13,7 @@ import { BlogAttributes } from './blogs';
 // blogs go here
 import * as websiteRewrite from './blogs/website-rewrite.mdx';
 import * as pesticideExtension from './blogs/pesticide-extension.mdx';
+import * as siteStack from './blogs/our-site-stack.mdx';
 
 export const headers: HeadersFunction = () => ({
   'cache-control':
@@ -36,7 +37,11 @@ const postFromModule = (mod: typeof websiteRewrite) => ({
 
 export const loader: LoaderFunction = () =>
   // add new post to beginning of the list so they'll show higher on the page
-  [postFromModule(pesticideExtension), postFromModule(websiteRewrite)];
+  [
+    postFromModule(siteStack),
+    postFromModule(pesticideExtension),
+    postFromModule(websiteRewrite),
+  ];
 
 function Blog() {
   const posts = useLoaderData<BlogAttributes[]>();
