@@ -282,7 +282,7 @@ const CohortSignUp = () => {
           })}
         />
         <FieldInput
-          label="Discord username (optional)"
+          label="Discord Username (optional)"
           id="discord-username"
           fullWidth
           {...register('discordUsername')}
