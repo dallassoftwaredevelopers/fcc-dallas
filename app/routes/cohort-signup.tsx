@@ -12,6 +12,7 @@ import {
   useLoaderData,
   useSubmit,
 } from 'remix';
+import { ProjectTier } from '~/constants/cohorts';
 import { supabase } from '~/db/supabase.server';
 import StaticContentLayout from '~/layouts/StaticContentLayout';
 import Button from '~/library/components/Button';
@@ -30,8 +31,10 @@ interface CohortSignUpForm {
   firstName: string;
   lastName: string;
   email: string;
+  discordUsername: string;
   preferredStack: string;
   role: 'FE' | 'BE' | 'FS' | 'UX';
+  tier: ProjectTier;
   wantsToLead: boolean;
   previouslyParticipated: boolean;
 }
@@ -113,7 +116,9 @@ export const action: ActionFunction = async ({ request }) => {
   const first_name = form.get('firstName');
   const last_name = form.get('lastName');
   const email = form.get('email');
+  const discord_username = form.get('discordUsername');
   const preferred_stack = form.get('preferredStack');
+  const tier = form.get('tier');
   const role = form.get('role') ?? null;
   const leader = form.get('wantsToLead') === 'true';
   const previously_participated = form.get('previouslyParticipated') === 'true';
@@ -127,7 +132,9 @@ export const action: ActionFunction = async ({ request }) => {
       first_name,
       last_name,
       email,
+      discord_username,
       preferred_stack,
+      tier,
       role,
       leader,
       previously_participated
@@ -144,7 +151,9 @@ export const action: ActionFunction = async ({ request }) => {
         first_name,
         last_name,
         email,
+        discord_username,
         preferred_stack,
+        tier: Number(tier),
         role,
         leader,
         previously_participated,
@@ -272,6 +281,12 @@ const CohortSignUp = () => {
             },
           })}
         />
+        <FieldInput
+          label="Discord username (optional)"
+          id="discord-username"
+          fullWidth
+          {...register('discordUsername')}
+        />
         <Controller
           control={control}
           name="role"
@@ -313,6 +328,44 @@ const CohortSignUp = () => {
                 label="UI/UX Designer"
                 id="role-ux"
                 value="UX"
+              />
+            </RadioGroup>
+          )}
+        />
+        <Controller
+          control={control}
+          name="tier"
+          rules={{
+            required: {
+              value: true,
+              message: 'Project type is required',
+            },
+          }}
+          render={({ field: { name, onChange } }) => (
+            <RadioGroup
+              label="Which kind of project are you most interested in?"
+              errorMsg={isDefined(errors.tier) ? errors.tier.message : ''}
+            >
+              <RadioButton
+                onChange={onChange}
+                name={name}
+                label="HTML/CSS/JS (Beginner)"
+                id="tier-beginner"
+                value={ProjectTier.BEGINNER}
+              />
+              <RadioButton
+                onChange={onChange}
+                name={name}
+                label="Frontend Framework (Intermediate)"
+                id="tier-intermediate"
+                value={ProjectTier.INTERMEDIATE}
+              />
+              <RadioButton
+                onChange={onChange}
+                name={name}
+                label="Full stack (Advanced)"
+                id="tier-advanced"
+                value={ProjectTier.ADVANCED}
               />
             </RadioGroup>
           )}

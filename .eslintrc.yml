@@ -29,3 +29,4 @@ rules:
   no-use-before-define: 0
   react/destructuring-assignment: 0
   no-console: 0
+  no-shadow: 0
