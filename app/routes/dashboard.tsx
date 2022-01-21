@@ -6,9 +6,7 @@ import DashboardSide from '~/page-components/dashboard/DashboardSide';
 import dashboardStyles from '~/styles/dashboard.css';
 import { isAuthenticated } from '~/utils/auth';
 
-export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: dashboardStyles },
-];
+export const links: LinksFunction = () => [{ rel: 'stylesheet', href: dashboardStyles }];
 
 export const loader: LoaderFunction = async () => {
   const isLoggedIn = await isAuthenticated();

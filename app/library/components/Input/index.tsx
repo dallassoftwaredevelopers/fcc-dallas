@@ -1,10 +1,7 @@
 import * as React from 'react';
 
 export interface InputProps
-  extends React.DetailedHTMLProps<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
-  > {
+  extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   fullWidth?: boolean;
   errorMsg?: string;
   id: string; // required for label accessibility

@@ -50,9 +50,7 @@ interface LoaderData {
   error?: string;
 }
 
-export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: staticStyles },
-];
+export const links: LinksFunction = () => [{ rel: 'stylesheet', href: staticStyles }];
 
 export const meta: MetaFunction = () => ({
   title: 'Cohort Sign Up',
@@ -68,10 +66,7 @@ export const loader: LoaderFunction = async ({ params }) => {
       .limit(1);
 
     if (futureCohorts.error) {
-      console.error(
-        'Cohorts Form Error Database Fetch Error:',
-        futureCohorts.error
-      );
+      console.error('Cohorts Form Error Database Fetch Error:', futureCohorts.error);
       return json(
         {
           cohort: '',
@@ -81,11 +76,7 @@ export const loader: LoaderFunction = async ({ params }) => {
       );
     }
 
-    if (
-      !futureCohorts.body ||
-      !futureCohorts.body.length ||
-      !futureCohorts.body[0].name
-    ) {
+    if (!futureCohorts.body || !futureCohorts.body.length || !futureCohorts.body[0].name) {
       console.warn('No new cohorts found');
       return json(
         {
@@ -208,23 +199,17 @@ const CohortSignUp = () => {
           {format(new Date(loaderData.cohort.start_date), 'MMMM dd, yyyy')}
         </P>
         <P style={{ marginBottom: 0 }}>
-          <strong>End Date:</strong>{' '}
-          {format(new Date(loaderData.cohort.end_date), 'MMMM dd, yyyy')}
+          <strong>End Date:</strong> {format(new Date(loaderData.cohort.end_date), 'MMMM dd, yyyy')}
         </P>
       </Row>
       <Divider />
       {loaderData.errorParam && (
         <ErrorMsg>
-          Failed to Submit Form. Please try again or contact us:{' '}
-          {loaderData.errorParam}
+          Failed to Submit Form. Please try again or contact us: {loaderData.errorParam}
         </ErrorMsg>
       )}
       <form method="post" onSubmit={submitForm}>
-        <input
-          {...register('cohortId')}
-          type="hidden"
-          value={loaderData.cohort.id}
-        />
+        <input {...register('cohortId')} type="hidden" value={loaderData.cohort.id} />
         <FieldInput
           label="First Name"
           id="first-name"
@@ -269,11 +254,7 @@ const CohortSignUp = () => {
           label="Preferred Technology, Languages, or Frameworks"
           id="preferred-stack"
           fullWidth
-          errorMsg={
-            isDefined(errors.preferredStack)
-              ? errors.preferredStack.message
-              : ''
-          }
+          errorMsg={isDefined(errors.preferredStack) ? errors.preferredStack.message : ''}
           {...register('preferredStack', {
             required: {
               value: true,
@@ -382,9 +363,7 @@ const CohortSignUp = () => {
           render={({ field: { name, onChange } }) => (
             <RadioGroup
               label="Would you be interested in leading a team?"
-              errorMsg={
-                isDefined(errors.wantsToLead) ? errors.wantsToLead.message : ''
-              }
+              errorMsg={isDefined(errors.wantsToLead) ? errors.wantsToLead.message : ''}
             >
               <RadioButton
                 onChange={onChange}

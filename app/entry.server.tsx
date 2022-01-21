@@ -14,9 +14,7 @@ export default function handleRequest(
     return redirectResponse;
   }
 
-  const markup = renderToString(
-    <RemixServer context={remixContext} url={request.url} />
-  );
+  const markup = renderToString(<RemixServer context={remixContext} url={request.url} />);
 
   responseHeaders.set('Content-Type', 'text/html');
 

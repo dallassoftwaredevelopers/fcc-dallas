@@ -32,13 +32,9 @@ const Error: React.FC<ErrorProps> = ({ type }) => (
 );
 
 type Error404Props = Omit<ErrorProps, 'type'>;
-const Error404: React.FC<Error404Props> = (props: Error404Props) => (
-  <Error {...props} type="404" />
-);
+const Error404: React.FC<Error404Props> = (props: Error404Props) => <Error {...props} type="404" />;
 type Error401Props = Omit<ErrorProps, 'type'>;
-const Error401: React.FC<Error401Props> = (props: Error401Props) => (
-  <Error {...props} type="401" />
-);
+const Error401: React.FC<Error401Props> = (props: Error401Props) => <Error {...props} type="401" />;
 
 type Error500sProps = Omit<ErrorProps, 'type'>;
 const Error500s: React.FC<Error500sProps> = (props: Error500sProps) => (

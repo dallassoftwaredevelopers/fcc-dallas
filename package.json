@@ -11,7 +11,7 @@
     "start": "npm run dev:wrangler",
     "lint:staged": "eslint",
     "check-types": "tsc",
-    "format": "prettier-eslint --write \"./**/*.{ts,tsx,js,jsx,json,yaml}\"",
+    "format": "prettier-eslint --write \"./**/*.{ts,tsx,js,jsx,json,yaml,mdx}\"",
     "format:staged": "git-format-staged -f \"prettier --write --stdin-filepath \"{}\"\" \"*.ts\" \"*.tsx\""
   },
   "dependencies": {

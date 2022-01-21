@@ -1,13 +1,6 @@
 import * as React from 'react';
 import { useForm, useFormState } from 'react-hook-form';
-import {
-  ActionFunction,
-  json,
-  LinksFunction,
-  LoaderFunction,
-  redirect,
-  useSubmit,
-} from 'remix';
+import { ActionFunction, json, LinksFunction, LoaderFunction, redirect, useSubmit } from 'remix';
 import ExternalLink from '~/components/ExternalLink';
 import { SocialMediaLinks } from '~/constants/external-links';
 import { supabase } from '~/db/supabase.server';
@@ -111,9 +104,7 @@ function Login() {
               label="Password"
               id="login-password"
               fullWidth
-              errorMsg={
-                isDefined(errors.password) ? errors.password.message : ''
-              }
+              errorMsg={isDefined(errors.password) ? errors.password.message : ''}
               {...register('password', {
                 required: {
                   value: true,
@@ -130,10 +121,7 @@ function Login() {
           </form>
           <P>
             Don't have an account?{' '}
-            <ExternalLink href={SocialMediaLinks.DISCORD}>
-              Contact us
-            </ExternalLink>{' '}
-            for an invite.
+            <ExternalLink href={SocialMediaLinks.DISCORD}>Contact us</ExternalLink> for an invite.
           </P>
         </div>
       </div>

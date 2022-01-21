@@ -9,11 +9,7 @@ interface RadioGroupProps {
 }
 
 // a lot more can be done on this component
-const RadioGroup: React.FC<RadioGroupProps> = ({
-  label,
-  errorMsg,
-  children,
-}) => (
+const RadioGroup: React.FC<RadioGroupProps> = ({ label, errorMsg, children }) => (
   <div style={{ marginBottom: '1rem' }}>
     <Label htmlFor={label} label={label}>
       <Row alignItems="center" gap="1rem">

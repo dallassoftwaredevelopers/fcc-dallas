@@ -8,12 +8,7 @@ interface BlogLayoutProps {
   img: string;
 }
 
-const BlogLayout: React.FC<BlogLayoutProps> = ({
-  title,
-  author,
-  img,
-  children,
-}) => (
+const BlogLayout: React.FC<BlogLayoutProps> = ({ title, author, img, children }) => (
   <ContentMarginsLayout>
     <H1>{title}</H1>
     <P style={{ fontWeight: '600' }}>{author}</P>

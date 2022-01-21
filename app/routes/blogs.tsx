@@ -7,8 +7,7 @@ import blogsStyles from '~/styles/pages/blogs.css';
 
 // full day cache due to low edits on blogs
 export const headers: HeadersFunction = () => ({
-  'cache-control':
-    'public, max-age=86400, s-maxage=86400, stale-while-revalidate=31536000',
+  'cache-control': 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=31536000',
 });
 
 export interface BlogAttributes {

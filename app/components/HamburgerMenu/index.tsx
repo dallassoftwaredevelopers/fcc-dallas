@@ -14,10 +14,7 @@ const HamburgerMenu: React.FC = ({ children }) => {
       setOpen(false);
       return;
     }
-    if (
-      menuRef.current.contains(clickedEl) ||
-      drawerRef.current.contains(clickedEl)
-    ) {
+    if (menuRef.current.contains(clickedEl) || drawerRef.current.contains(clickedEl)) {
       return;
     }
     setOpen(false);
@@ -65,10 +62,7 @@ const HamburgerMenu: React.FC = ({ children }) => {
 
       <div
         ref={drawerRef}
-        className={`hamburger-drawer ${applyIfTrue(
-          isOpen,
-          'hamburger-drawer-open'
-        )}`}
+        className={`hamburger-drawer ${applyIfTrue(isOpen, 'hamburger-drawer-open')}`}
       >
         <img
           src="/img/fcc-logo.png"

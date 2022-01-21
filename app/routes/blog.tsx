@@ -1,10 +1,4 @@
-import {
-  HeadersFunction,
-  LinksFunction,
-  LoaderFunction,
-  MetaFunction,
-  useLoaderData,
-} from 'remix';
+import { HeadersFunction, LinksFunction, LoaderFunction, MetaFunction, useLoaderData } from 'remix';
 import StaticContentLayout from '~/layouts/StaticContentLayout';
 import BlogCard from '~/page-components/blog/BlogCard';
 import staticStyles from '~/styles/layouts/static.css';
@@ -16,8 +10,7 @@ import * as pesticideExtension from './blogs/pesticide-extension.mdx';
 import * as siteStack from './blogs/our-site-stack.mdx';
 
 export const headers: HeadersFunction = () => ({
-  'cache-control':
-    'public, max-age=1800, s-maxage=86400, stale-while-revalidate=31536000',
+  'cache-control': 'public, max-age=1800, s-maxage=86400, stale-while-revalidate=31536000',
 });
 
 export const links: LinksFunction = () => [
@@ -37,11 +30,7 @@ const postFromModule = (mod: typeof websiteRewrite) => ({
 
 export const loader: LoaderFunction = () =>
   // add new post to beginning of the list so they'll show higher on the page
-  [
-    postFromModule(siteStack),
-    postFromModule(pesticideExtension),
-    postFromModule(websiteRewrite),
-  ];
+  [postFromModule(siteStack), postFromModule(pesticideExtension), postFromModule(websiteRewrite)];
 
 function Blog() {
   const posts = useLoaderData<BlogAttributes[]>();
