@@ -1,17 +1,5 @@
 import { redirect } from 'remix';
-import { SITE_BASE_URL } from '~/constants/global';
-
-interface RedirectUrl {
-  from: string;
-  to: string;
-}
-
-const REDIRECTS: RedirectUrl[] = [
-  {
-    from: `${SITE_BASE_URL}/about-us`,
-    to: SITE_BASE_URL,
-  },
-];
+import { REDIRECTS_MAP } from '~/constants/redirects';
 
 const httpsRedirect = (url: string) => {
   if (url.includes('www')) {
@@ -33,11 +21,11 @@ export const makeRedirectIfExists = (url: string) => {
     return httpsRedirectResponse;
   }
 
-  const redirectDetails = REDIRECTS.find((r) => r.from === url);
-  if (!redirectDetails) {
+  const redirectTo = REDIRECTS_MAP[url];
+  if (!redirectTo) {
     return null;
   }
-  return redirect(redirectDetails.to, {
+  return redirect(redirectTo, {
     status: 301,
   });
 };
