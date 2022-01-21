@@ -3,11 +3,9 @@ import {
   Links,
   LinksFunction,
   LiveReload,
-  LoaderFunction,
   Meta,
   MetaFunction,
   Outlet,
-  redirect,
   Scripts,
   ScrollRestoration,
   useCatch,
@@ -67,20 +65,6 @@ export function CatchBoundary() {
     </Document>
   );
 }
-
-export const loader: LoaderFunction = ({ request }) => {
-  if (request.url.includes('www')) {
-    let redirectUrl = request.url.replace('www.', '');
-
-    if (!redirectUrl.includes('https') && redirectUrl.includes('http')) {
-      redirectUrl = redirectUrl.replace('http', 'https');
-    }
-    return redirect(redirectUrl, {
-      status: 301,
-    });
-  }
-  return null;
-};
 
 const App = () => (
   <Document>
