@@ -1,13 +1,14 @@
 ---
 meta:
-  title: This site's tech stack and why
-  description: How and why we used Remix, Supabase, and TypeScript
+  title: This Site's Tech Stack and Why
+  description: How and why we used Remix, Cloudflare, Supabase, and TypeScript
 slug: '/blogs/our-site-stack'
 author: Rob Bertram
 img: '/img/blog/our-site-stack.jpg'
 ---
 
 import BlogLayout from '~/layouts/BlogLayout';
+import ExternalLink from '~/components/ExternalLink';
 
 <BlogLayout {...{ ...attributes, ...attributes.meta }}>
   At the time of writing this, the tech stack we chose to build this site is
@@ -15,7 +16,7 @@ import BlogLayout from '~/layouts/BlogLayout';
 
 ## Remix
 
-First, we're really excited about <a href="https://remix.run/" target="_blank">Remix</a> and
+First, we're really excited about <ExternalLink href="https://remix.run/">Remix</ExternalLink> and
 chose it as our React metaframework (although it's more than just React - It's
 a full stack framework). Remix stretches traditionally front end developers to
 think about the back end as well. Remix is often compared to PHP in the way it
@@ -23,22 +24,22 @@ brings together front end and back end code into the same files in many cases.
 This in itself is a big win for us since we'd like contribution to our site to
 be as educational as possible, but there's actually A LOT of really great reasons
 to use Remix. We knew we were likely going to use either Next or Remix and many of
-the reasons for choosing Remix can be found <a href="https://remix.run/blog/remix-vs-next" target="_blank">here</a>.
+the reasons for choosing Remix can be found <ExternalLink href="https://remix.run/blog/remix-vs-next">here</ExternalLink>.
 
 To mention just some of the most important reasons for choosing Remix:
 
 1. Remix is right: Distributed web infrastructure has gotten really good. With the ability to have distributed node instances in the way that fly.io offers or even to be able to build out a decent portion of a website's back end in something like a Cloudflare worker,
-   it makes server side rendering a compelling alternative to static site generation. Ryan Florence had a really good talk on that <a href="https://www.youtube.com/watch?v=bfLFHp7Sbkg" target="_blank">here</a>.
+   it makes server side rendering a compelling alternative to static site generation. Ryan Florence had a really good talk on that <ExternalLink href="https://www.youtube.com/watch?v=bfLFHp7Sbkg">here</ExternalLink>.
 2. The dev experience is great and really fun. The way that Remix is organized is a really intuitive way to think about your pages. Remix has loaders that act as server code to run before your page loads,
    actions for handling form submission, a meta function for handling meta details such as title, description, keywords etc, and a links function for managing thinks like what CSS files make it's way onto your page.
 3. We're able to handle more data loading/manipulation on the back end through a loader which means the user doesn't sit staring at a page with a spinner on it while they wait for the app to talk to a server in some far away data center.
    Remix points out that the need for spinners in most cases goes away thanks to this paradigm.
 
-There's a lot more reasons to be hyped about Remix than the few talked about here. Kent Dodds has a lot more to say about Remix and its worth checking out this <a href="https://www.youtube.com/watch?v=KWh-9-JIUAQ" target="_blank">video</a>.
+There's a lot more reasons to be hyped about Remix than the few talked about here. Kent Dodds has a lot more to say about Remix and its worth checking out this <ExternalLink href="https://www.youtube.com/watch?v=KWh-9-JIUAQ">video</ExternalLink>.
 
 ## Cloudflare
 
-Remix has many deployment options that it gives you when you start a new Remix project. We chose Cloudflare Pages. Cloudflare pages runs the Remix back end code inside Cloudflare workers. While it comes with some real tradeoffs,
+Remix has many deployment options that it gives you when you start a new Remix project. We chose <ExternalLink href="https://pages.cloudflare.com/">Cloudflare Pages</ExternalLink>. Cloudflare pages runs the Remix back end code inside Cloudflare workers. While it comes with some real tradeoffs,
 this is generally awesome because it means that we're able have our back end code 1) live much closer to users on the edge than traditional servers and 2) many scaling issues just go away with workers -- they scale themselves for the most part.
 A valid criticism at this point would be that the fcc-dallas site is unlikely to benefit from globally accessible workers as opposed to a server that sits in Dallas and that we're unlikely to get more than a few visitors to the site at once. While
 those are valid critiques, Cloudflare makes it easy to cache pages and makes our site fast across the globe.
@@ -48,13 +49,20 @@ that are not accessible to us and we'll have to research what we can and cannot 
 
 ## Supabase
 
-We wanted a fast database to go with our hyped Remix/Cloudflare setup. Supabase was a good option because it provides a distributed database that would provide minimal db performance bottlenecks for what should be a fast experience on Cloudflare for our users.
+We wanted a fast database to go with our hyped Remix/Cloudflare setup. <ExternalLink href="https://supabase.com">Supabase</ExternalLink> was a good option because it provides a distributed database that would provide minimal db performance bottlenecks for what should be a fast experience on Cloudflare for our users.
 
 Supabase uses postgres and has Row Level Security features that make it possible to expose tokens to identify your database, but still lock down access with authentication. For some apps, this means the front end can talk directly to the database -- which remains an option for us if we choose to do so someday.
 So far, we've been able to keep most of our interaction with Supabase on the back end, but aren't worried about keeping what would otherwise be env variables in our github repo for our developers to share since RLS enforces access restrictions. Supabase makes creating RLS policies simple. Most of the time, we're able
 to choose templates and make light modifications to get the rules we want.
 
 Supabase in general makes database management easy for us. Since most of us are front end focused, the UI options for defining tables, columns, primary keys, etc. has been convenient. To top it all off, Supabase completely takes care of our authentication which gives us a lot less to worry about.
+
+## TypeScript
+
+Personally, <ExternalLink href="https://www.typescriptlang.org/">TypeScript</ExternalLink> has changed the way I think about writing front end code. There's several benefits to TypeScript, but readability sticks out for me. In complex vanilla JavaScript apps, reading code becomes difficult because it's hard to know what's in a variable.
+If there's an object the app uses, it's really useful to know what's in the object, and what will always be there versus what is optionally included. It becomes easier to put the pieces together in ways that are much more difficult in JavaScript by itself.
+In this way, TypeScript documents your code and empowers your intellisense to know what can be included in your variables. There are other great benefits to TypeScript such as type validation at compile time, enforcing null checks, etc. In short, TypeScript
+makes front end simpler by offloading some of the work to the TypeScript compiler and intellisense, and we're happy to use it as part of our development for this site.
 
 All in all, this site is still growing, if you're interested in contributing, join us on Discord!
 

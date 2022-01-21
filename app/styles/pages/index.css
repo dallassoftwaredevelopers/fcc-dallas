@@ -20,3 +20,10 @@
 .main-heading {
   margin: 3rem 0 0.5rem 0;
 }
+
+.white-board {
+  display: block;
+  margin: auto;
+  width: 500px;
+  max-width: 100%;
+}
