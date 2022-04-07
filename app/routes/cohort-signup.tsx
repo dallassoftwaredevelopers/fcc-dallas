@@ -37,6 +37,10 @@ interface CohortSignUpForm {
   tier: ProjectTier;
   wantsToLead: boolean;
   previouslyParticipated: boolean;
+  howHeardAboutCohort: string;
+  whenAvailable: string;
+  wouldLikeToImprove: string;
+  bestWayToContact: string;
 }
 
 interface LoaderData {
@@ -113,6 +117,10 @@ export const action: ActionFunction = async ({ request }) => {
   const role = form.get('role') ?? null;
   const leader = form.get('wantsToLead') === 'true';
   const previously_participated = form.get('previouslyParticipated') === 'true';
+  const how_heard_about = form.get('howHeardAboutCohort');
+  const when_available = form.get('whenAvailable');
+  const would_like_to_improve = form.get('wouldLikeToImprove');
+  const way_to_contact = form.get('bestWayToContact');
 
   if (!cohort_fk) {
     console.warn('Form submission missing cohorts ID');
@@ -128,7 +136,11 @@ export const action: ActionFunction = async ({ request }) => {
       tier,
       role,
       leader,
-      previously_participated
+      previously_participated,
+      how_heard_about,
+      when_available,
+      would_like_to_improve,
+      way_to_contact
     )
   ) {
     console.warn('Form submission missing data');
@@ -148,6 +160,10 @@ export const action: ActionFunction = async ({ request }) => {
         role,
         leader,
         previously_participated,
+        how_heard_about,
+        when_available,
+        would_like_to_improve,
+        way_to_contact,
       },
       {
         returning: 'minimal',
@@ -416,6 +432,44 @@ const CohortSignUp = () => {
               />
             </RadioGroup>
           )}
+        />
+        <FieldInput
+          label="How did you hear about the Cohort? (Optional)"
+          id="heard-about-cohort"
+          fullWidth
+          errorMsg={isDefined(errors.howHeardAboutCohort) ? errors.howHeardAboutCohort.message : ''}
+          {...register('howHeardAboutCohort')}
+        />
+        <FieldInput
+          label="When are you available for weekly virtual meetings?"
+          id="weekly-availability"
+          fullWidth
+          errorMsg={isDefined(errors.whenAvailable) ? errors.whenAvailable.message : ''}
+          {...register('whenAvailable', {
+            required: {
+              value: true,
+              message: 'Availability is required',
+            },
+          })}
+        />
+        <FieldInput
+          label="What skills would you like to improve? (Optional)"
+          id="improve-skills"
+          fullWidth
+          errorMsg={isDefined(errors.wouldLikeToImprove) ? errors.wouldLikeToImprove.message : ''}
+          {...register('wouldLikeToImprove')}
+        />
+        <FieldInput
+          label="What is the best way to contact you?"
+          id="best-way-contact"
+          fullWidth
+          errorMsg={isDefined(errors.bestWayToContact) ? errors.bestWayToContact.message : ''}
+          {...register('bestWayToContact', {
+            required: {
+              value: true,
+              message: 'Best way to contact is required',
+            },
+          })}
         />
         <Row justifyContent="flex-end">
           <Button size="m" type="submit">
