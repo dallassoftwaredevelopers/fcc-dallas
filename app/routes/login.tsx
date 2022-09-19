@@ -1,12 +1,21 @@
 import * as React from 'react';
 import { useForm, useFormState } from 'react-hook-form';
-import { ActionFunction, json, LinksFunction, LoaderFunction, redirect, useSubmit } from 'remix';
+import {
+  ActionFunction,
+  json,
+  LinksFunction,
+  LoaderFunction,
+  redirect,
+  useActionData,
+  useSubmit,
+} from 'remix';
 import ExternalLink from '~/components/ExternalLink';
 import { SocialMediaLinks } from '~/constants/external-links';
 import { supabase } from '~/db/supabase.server';
 import StaticContentLayout from '~/layouts/StaticContentLayout';
 import Button from '~/library/components/Button';
 import Divider from '~/library/components/Divider';
+import ErrorMsg from '~/library/components/ErrorMsg';
 import FieldInput from '~/library/components/FieldInput';
 import Row from '~/library/components/Row';
 import { H2, P } from '~/library/components/Typography';
@@ -46,6 +55,8 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   const { session, error } = await supabase.auth.signIn({ email, password });
+  console.log(session);
+  console.log(error);
   if (session) {
     return redirect('/dashboard/home', {
       headers: {
@@ -66,6 +77,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 function Login() {
   const submit = useSubmit();
+  const actionData = useActionData();
   const { register, trigger, control } = useForm<LoginForm>();
   const { errors } = useFormState({ control });
   const submitForm = async (e: React.KeyboardEvent<HTMLFormElement>) => {
@@ -81,6 +93,7 @@ function Login() {
     <StaticContentLayout>
       <div className="login-center">
         <div className="login-container">
+          {actionData?.error?.message && <ErrorMsg>{actionData.error.message}</ErrorMsg>}
           <H2>Login</H2>
           <Divider />
           <form method="post" onSubmit={submitForm}>
