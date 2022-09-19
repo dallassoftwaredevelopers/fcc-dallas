@@ -22,7 +22,7 @@ import { H2, P } from '~/library/components/Typography';
 import staticStyles from '~/styles/layouts/static.css';
 import loginStyles from '~/styles/pages/login.css';
 import { isDefined } from '~/utils';
-import { isAuthenticated, supabaseToken } from '~/utils/auth';
+import { getToken, isAuthenticated, supabaseToken } from '~/utils/auth';
 
 interface LoginForm {
   email: string;
@@ -44,6 +44,7 @@ export const loader: LoaderFunction = async () => {
 };
 
 export const action: ActionFunction = async ({ request }) => {
+  getToken(request);
   const form = await request.formData();
   const email = form.get('email');
   const password = form.get('password');
@@ -55,21 +56,38 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   const { session, error } = await supabase.auth.signIn({ email, password });
-  console.log(session);
-  console.log(error);
+  const { data: userDetails, error: userDetailsError } = await supabase
+    .from('user_details')
+    .select('role')
+    .eq('user_fk', email);
+  if (!userDetails?.length) {
+    throw new Error('User does not have user details');
+  }
   if (session) {
     return redirect('/dashboard/home', {
       headers: {
-        'Set-Cookie': await supabaseToken.serialize(session.access_token, {
-          expires: new Date(session?.expires_at!),
-          maxAge: session.expires_in,
-        }),
+        'Set-Cookie': await supabaseToken.serialize(
+          {
+            token: session.access_token,
+            user: {
+              email: userDetails[0].user_fk,
+              role: userDetails[0].role,
+            },
+          },
+          {
+            expires: new Date(session?.expires_at!),
+            maxAge: session.expires_in,
+          }
+        ),
       },
     });
   }
 
   if (error && error.status >= 500) {
     console.error(`Unexpected login error; ${error.status} ${error.message}`);
+  }
+  if (userDetailsError) {
+    console.error(`Unexpected login error; ${userDetailsError.message}`);
   }
 
   return { error };

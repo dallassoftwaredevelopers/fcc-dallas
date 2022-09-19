@@ -1,9 +1,15 @@
 import type { ApiError, User } from '@supabase/supabase-js';
 import { createCookie, redirect } from 'remix';
+import { SUPABASE_COOKIE_NAME } from '~/constants/supabase-constants';
 import { supabase } from '~/db/supabase.server';
 import { Nullable } from '~/remix-app';
 
-export const supabaseToken = createCookie('sb:token', {
+export type Role = 'ADMIN' | 'USER';
+interface UserDetails {
+  email: string;
+  role: Role;
+}
+export const supabaseToken = createCookie(SUPABASE_COOKIE_NAME, {
   httpOnly: true,
   secure: false,
   sameSite: 'lax',
@@ -20,7 +26,12 @@ export const getUserByToken = async (
 
 export const getToken = async (request: Request): Promise<string | null> => {
   const cookieHeader = request.headers.get('Cookie');
-  return supabaseToken.parse(cookieHeader);
+  const sbCookie: { token: string; user: UserDetails } = await supabaseToken.parse(cookieHeader);
+  if (sbCookie?.token) {
+    return sbCookie.token;
+  }
+  console.warn('Unable to retrieve token');
+  return null;
 };
 
 export const isAuthenticated = async (
@@ -47,3 +58,15 @@ export const getUserByRequestToken = async (request: Request) => {
   }
   return getUserByToken(token);
 };
+
+export const getRole = async (request: Request): Promise<Nullable<string>> => {
+  const cookieHeader = request.headers.get('Cookie');
+  const sbCookie: { token: string; user: UserDetails } = await supabaseToken.parse(cookieHeader);
+  if (!sbCookie) {
+    return null;
+  }
+  return sbCookie.user.role;
+};
+
+export const isAdmin = async (request: Request): Promise<boolean> =>
+  (await getRole(request)) === 'ADMIN';

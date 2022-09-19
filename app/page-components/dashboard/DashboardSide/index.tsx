@@ -1,13 +1,17 @@
-import { faHome, faTrophy } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faTrophy, faAnchor } from '@fortawesome/free-solid-svg-icons';
 import * as React from 'react';
 import { useNavigate } from 'remix';
 import { supabaseClient } from '~/db/supabase-client';
 import Row from '~/library/components/Row';
+import { Role } from '~/utils/auth';
 import DashboardSideOption from '../DashboardSideOption';
 
-const DashboardSide = () => {
-  const navigate = useNavigate();
+interface DashboardSideProps {
+  userRole: Role;
+}
 
+const DashboardSide = ({ userRole }: DashboardSideProps) => {
+  const navigate = useNavigate();
   const logout = async () => {
     await supabaseClient?.auth?.signOut();
     await fetch('/api/logout', {
@@ -43,6 +47,11 @@ const DashboardSide = () => {
         <DashboardSideOption to="/dashboard/mock-interviews">
           Mock Interviews
         </DashboardSideOption> */}
+        {userRole === 'ADMIN' && (
+          <DashboardSideOption to="/dashboard/cohorts" icon={faAnchor}>
+            Admin
+          </DashboardSideOption>
+        )}
       </Row>
       <Row flexDirection="column" style={{ width: '100%' }}>
         <DashboardSideOption onClick={logout}>Logout</DashboardSideOption>
