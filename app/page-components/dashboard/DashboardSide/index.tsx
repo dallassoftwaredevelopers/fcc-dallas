@@ -48,7 +48,7 @@ const DashboardSide = ({ userRole }: DashboardSideProps) => {
           Mock Interviews
         </DashboardSideOption> */}
         {userRole === 'ADMIN' && (
-          <DashboardSideOption to="/dashboard/cohorts" icon={faAnchor}>
+          <DashboardSideOption to="/dashboard/admin" icon={faAnchor}>
             Admin
           </DashboardSideOption>
         )}

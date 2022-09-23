@@ -37,8 +37,7 @@ export const links: LinksFunction = () => [
 export const loader: LoaderFunction = async () => {
   const isLoggedIn = await isAuthenticated();
   if (isLoggedIn) {
-    // reneable one we fix logout
-    // return redirect("/dashboard/home");
+    return redirect('/dashboard/home');
   }
   return null;
 };

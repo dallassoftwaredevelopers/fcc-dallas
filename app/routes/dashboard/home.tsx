@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { LinksFunction, MetaFunction } from 'remix';
+import DashboardViewLayout from '~/layouts/DashboardViewLayout';
 import { H1, H2, P } from '~/library/components/Typography';
 import homeStyles from '~/styles/pages/dashboard/home.css';
 
@@ -11,7 +12,7 @@ export const meta: MetaFunction = () => ({
 });
 
 const Home: React.FC = () => (
-  <div style={{ maxWidth: '875px', margin: 'auto' }}>
+  <DashboardViewLayout>
     <H1>Welcome to the freeCodeCamp Dallas Dashboard</H1>
     <H2>We've got big plans for you!</H2>
     <P>
@@ -25,7 +26,7 @@ const Home: React.FC = () => (
       continued mentorship, and a supportive community.
     </P>
     <img src="/img/dashboard/lighthouse.svg" alt="welcome!" className="home-lighthouse" />
-  </div>
+  </DashboardViewLayout>
 );
 
 export default Home;
