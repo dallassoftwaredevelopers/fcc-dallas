@@ -20,18 +20,29 @@ export const meta: MetaFunction = () => ({
 
 interface AddUserForm {
   email: string;
+  password: string;
 }
 
 type ActionData = { type: 'error'; message: string } | { type: 'success' };
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
   const email = form.get('email');
-
-  if (typeof email !== 'string') {
-    return json({
-      message: 'Invalid add user email payload',
-      status: 400,
-    });
+  const password = form.get('password');
+  if (typeof email !== 'string' || typeof password !== 'string') {
+    throw json(
+      {
+        message: 'Invalid add user email or password payload',
+      },
+      400
+    );
+  }
+  if (password.length < 8) {
+    throw json(
+      {
+        message: 'Password is too short',
+      },
+      400
+    );
   }
 
   const role = await getRole(request);
@@ -44,9 +55,11 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  const { data: user, error } = await supabase.auth.api.inviteUserByEmail(
-    email.toLowerCase().trim()
-  );
+  const correctedEmail = email.toLowerCase().trim();
+  const { user, error } = await supabase.auth.signUp({
+    email: correctedEmail,
+    password: password.trim(),
+  });
 
   if (error) {
     console.error('User invite error:', error);
@@ -55,6 +68,21 @@ export const action: ActionFunction = async ({ request }) => {
       message: `An unexpected invite error occurred: ${error.status}: ${error.message}`,
     });
   }
+
+  // todo: we really should have a db transaction handle this so
+  // signUp user is rolled back if user details fails
+  const { error: detailsError } = await supabase
+    .from('user_details')
+    .insert([{ user_fk: correctedEmail }]);
+
+  if (detailsError) {
+    console.error('User details insert error:', detailsError);
+    return json({
+      type: 'error',
+      message: `An unexpected user details error occurred: ${detailsError.message}`,
+    });
+  }
+
   return json({
     type: 'success',
     user,
@@ -81,7 +109,7 @@ const AddUser = () => {
       {match(actionData)
         .with(Pattern.nullish, () => null)
         .with({ type: 'error' }, (d) => <ErrorMsg>{d.message}</ErrorMsg>)
-        .with({ type: 'success' }, () => <H2>User Invited!</H2>)
+        .with({ type: 'success' }, () => <H2 style={{ color: 'green' }}>User Invited!</H2>)
         .exhaustive()}
       <form method="post" onSubmit={submitForm}>
         <FieldInput
@@ -97,6 +125,22 @@ const AddUser = () => {
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
               message: 'Email must be valid',
+            },
+          })}
+        />
+        <FieldInput
+          label="Password"
+          id="login-password"
+          fullWidth
+          errorMsg={isDefined(errors.password) ? errors.password.message : ''}
+          {...register('password', {
+            required: {
+              value: true,
+              message: 'Password is required',
+            },
+            minLength: {
+              value: 8,
+              message: 'Password must be at least 8 characters in length',
             },
           })}
         />

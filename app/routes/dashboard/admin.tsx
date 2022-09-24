@@ -35,7 +35,6 @@ export const loader: LoaderFunction = async ({ request }) => {
       401
     );
   }
-
   return null;
 };
 
@@ -51,7 +50,7 @@ function Admin() {
         If you think you have access to this by mistake or no longer wish to be an admin, please let
         us know!
       </P>
-      <P>Click below to select an admin function</P>
+      <P>Click a badge below to select an admin function</P>
       <Link to="/dashboard/admin/add-user" prefetch="intent">
         <Badge variant="info">Add User</Badge>
       </Link>
