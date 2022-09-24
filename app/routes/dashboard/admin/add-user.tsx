@@ -91,17 +91,27 @@ export const action: ActionFunction = async ({ request }) => {
 
 const AddUser = () => {
   const submit = useSubmit();
+  const [isLoading, setIsLoading] = React.useState(false);
   const { register, trigger, control } = useForm<AddUserForm>();
   const { errors } = useFormState({ control });
   const actionData = useActionData<ActionData>();
+
   const submitForm = async (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (isLoading) {
+      e.preventDefault();
+      return;
+    }
+    setIsLoading(true);
     await trigger();
     if (!Object.keys(errors).length) {
       submit(e.currentTarget, { replace: true });
+      setIsLoading(false);
       return;
     }
     e.preventDefault();
+    setIsLoading(false);
   };
+
   return (
     <div style={{ margin: '1rem 0' }}>
       <H2>Add User</H2>
