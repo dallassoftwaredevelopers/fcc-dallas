@@ -51,9 +51,14 @@ function Admin() {
         us know!
       </P>
       <P>Click a badge below to select an admin function</P>
-      <Link to="/dashboard/admin/add-user" prefetch="intent">
-        <Badge variant="info">Add User</Badge>
-      </Link>
+      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+        <Link to="/dashboard/admin/add-user" prefetch="intent">
+          <Badge variant="info">Add User</Badge>
+        </Link>
+        <Link to="/dashboard/admin/create-cohort" prefetch="intent">
+          <Badge variant="success">Add Cohort</Badge>
+        </Link>
+      </div>
       <Divider />
       <Outlet />
     </DashboardViewLayout>
