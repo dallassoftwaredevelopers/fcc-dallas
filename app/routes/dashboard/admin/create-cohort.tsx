@@ -44,7 +44,6 @@ export const action: ActionFunction = async ({ request }) => {
   const name = form.get('name');
   const startDate = form.get('startDate');
   const endDate = form.get('endDate');
-
   if (typeof name !== 'string') {
     throw json(
       {
@@ -53,7 +52,7 @@ export const action: ActionFunction = async ({ request }) => {
       400
     );
   }
-  if (typeof startDate !== 'object') {
+  if (typeof startDate !== 'object' || !startDate) {
     throw json(
       {
         message: 'Start Date is required',
@@ -61,7 +60,7 @@ export const action: ActionFunction = async ({ request }) => {
       400
     );
   }
-  if (typeof endDate !== 'object') {
+  if (typeof endDate !== 'object' || !endDate) {
     throw json(
       {
         message: 'End Date is required',
@@ -78,7 +77,6 @@ export const action: ActionFunction = async ({ request }) => {
       401
     );
   }
-  console.log('derp');
   const { data, error } = await supabase.from('cohort').insert([
     {
       name,
@@ -86,16 +84,12 @@ export const action: ActionFunction = async ({ request }) => {
       end_date: endDate,
     },
   ]);
-
-  console.log(data);
-  console.log(error);
   if (error) {
     return json({
       type: 'error',
       message: `Unexpected error: ${error}`,
     });
   }
-  console.log('yuhhh');
   return json({
     type: 'success',
     data,

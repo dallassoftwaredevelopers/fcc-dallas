@@ -6,7 +6,6 @@ import { supabaseClient as supabase } from '~/db/supabase-client';
 
 const EntryClient = () => {
   React.useEffect(() => {
-    console.log('foo-bar');
     if (!supabase) {
       console.warn('supabase not found!');
       return;

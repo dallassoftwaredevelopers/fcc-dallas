@@ -58,6 +58,9 @@ function Admin() {
         <Link to="/dashboard/admin/create-cohort" prefetch="intent">
           <Badge variant="success">Add Cohort</Badge>
         </Link>
+        <Link to="/dashboard/admin/cohort-rosters" prefetch="intent">
+          <Badge variant="warn">Cohort Rosters</Badge>
+        </Link>
       </div>
       <Divider />
       <Outlet />
