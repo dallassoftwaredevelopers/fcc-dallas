@@ -115,6 +115,7 @@ function Login() {
           <Divider />
           <form method="post" onSubmit={submitForm}>
             <FieldInput
+              autoFocus
               label="Email"
               id="login-email"
               fullWidth

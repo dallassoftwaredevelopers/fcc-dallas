@@ -30,3 +30,4 @@ rules:
   react/destructuring-assignment: 0
   no-console: 0
   no-shadow: 0
+  camelcase: 0

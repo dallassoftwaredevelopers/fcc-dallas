@@ -26,7 +26,7 @@ import { H2, P } from '~/library/components/Typography';
 import staticStyles from '~/styles/layouts/static.css';
 import { areAllDefined, isDefined } from '~/utils';
 
-interface CohortSignUpForm {
+export interface CohortSignUpForm {
   cohortId: string;
   firstName: string;
   lastName: string;
