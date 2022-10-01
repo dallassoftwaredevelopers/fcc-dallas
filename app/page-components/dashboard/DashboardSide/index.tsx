@@ -25,6 +25,8 @@ const DashboardSide = ({ userRole }: DashboardSideProps) => {
       flexDirection="column"
       justifyContent="space-between"
       style={{
+        position: 'sticky',
+        top: 0,
         minHeight: '100vh',
         width: '300px',
         padding: '1rem',
