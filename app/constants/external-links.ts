@@ -1,5 +1,5 @@
 export class SocialMediaLinks {
-  static readonly DISCORD = 'https://discord.gg/tXRdkbQfem';
+  static readonly DISCORD = 'https://discord.gg/nVFcgTxFMt';
 
   static readonly FACEBOOK = 'https://www.facebook.com/groups/867032956695653';
 
