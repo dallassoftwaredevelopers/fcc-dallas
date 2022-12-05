@@ -10,6 +10,7 @@ import {
 import DashboardViewLayout from '~/layouts/DashboardViewLayout';
 import { Badge } from '~/library/components/Badge';
 import Divider from '~/library/components/Divider';
+import Row from '~/library/components/Row';
 import { H1, P } from '~/library/components/Typography';
 import staticStyles from '~/styles/layouts/static.css';
 import { getRole } from '~/utils/auth';
@@ -51,7 +52,7 @@ function Admin() {
         us know!
       </P>
       <P>Click a badge below to select an admin function</P>
-      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+      <Row>
         <Link to="/dashboard/admin/add-user" prefetch="intent">
           <Badge variant="info">Add User</Badge>
         </Link>
@@ -61,7 +62,7 @@ function Admin() {
         <Link to="/dashboard/admin/cohort-rosters" prefetch="intent">
           <Badge variant="warn">Cohort Rosters</Badge>
         </Link>
-      </div>
+      </Row>
       <Divider />
       <Outlet />
     </DashboardViewLayout>

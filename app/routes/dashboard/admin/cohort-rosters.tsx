@@ -1,8 +1,9 @@
 import { json, LinksFunction, LoaderFunction, MetaFunction, useLoaderData } from 'remix';
 import React from 'react';
 import DataTable from 'react-data-table-component';
+import { match } from 'ts-pattern';
 import staticStyles from '~/styles/layouts/static.css';
-import { H2, P } from '~/library/components/Typography';
+import { H2, H3, P } from '~/library/components/Typography';
 import { getRole } from '~/utils/auth';
 import { supabase } from '~/db/supabase.server';
 import { RosterExpanded } from '~/page-components/dashboard/RosterExpanded';
@@ -20,7 +21,7 @@ export interface ApplicantResponse {
   rejected: boolean;
   admin_action_by?: string;
   cohort_fk: string;
-  user_fk?: any;
+  user_fk?: string;
   email: string;
   tier: number;
   discord_username: string;
@@ -29,6 +30,21 @@ export interface ApplicantResponse {
   would_like_to_improve: string;
   way_to_contact: string;
 }
+
+interface LoaderSuccessResponse {
+  type: 'success';
+  applicants: {
+    data: ApplicantResponse[];
+  };
+}
+
+interface LoaderFailureResponse {
+  type: 'error';
+  message: string;
+}
+
+type LoaderData = LoaderSuccessResponse | LoaderFailureResponse;
+
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: staticStyles }];
 
 export const meta: MetaFunction = () => ({
@@ -54,13 +70,10 @@ export const loader: LoaderFunction = async ({ request }) => {
     .limit(1);
   if (!futureCohorts.body || !futureCohorts.body.length || !futureCohorts.body[0].name) {
     console.warn('No new cohorts found');
-    throw json(
-      {
-        type: 'error',
-        error: 'Unable to find future Cohort',
-      },
-      400
-    );
+    return {
+      type: 'error',
+      message: 'Unable to find future Cohort',
+    };
   }
   const mostRecentCohortId = futureCohorts.body[0].id;
   const applicants = await supabase
@@ -74,34 +87,40 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 function CohortRoster() {
-  const loaderData = useLoaderData();
-  React.useMemo(() => {
-    console.table(loaderData.applicants.data);
-  }, [loaderData]);
-
+  const loaderData = useLoaderData<LoaderData>();
   return (
     <div style={{ margin: '1rem 0' }}>
       <H2>Cohort Rosters</H2>
       <P>View Cohort roster information. Select a Cohort to view its registered participants</P>
-      <DataTable
-        columns={[
-          {
-            name: 'First',
-            selector: (row: ApplicantResponse) => row.first_name,
-          },
-          {
-            name: 'Last',
-            selector: (row: ApplicantResponse) => row.last_name,
-          },
-          {
-            name: 'Discord Username',
-            selector: (row: ApplicantResponse) => row.discord_username,
-          },
-        ]}
-        data={loaderData.applicants.data}
-        expandableRows
-        expandableRowsComponent={RosterExpanded}
-      />
+      {match(loaderData)
+        .with({ type: 'error' }, ({ message }) => (
+          <>
+            <H3>Unable to find Cohort Roster</H3>
+            <P italic>{message}</P>
+          </>
+        ))
+        .with({ type: 'success' }, ({ applicants }) => (
+          <DataTable
+            columns={[
+              {
+                name: 'First',
+                selector: (row: ApplicantResponse) => row.first_name,
+              },
+              {
+                name: 'Last',
+                selector: (row: ApplicantResponse) => row.last_name,
+              },
+              {
+                name: 'Discord Username',
+                selector: (row: ApplicantResponse) => row.discord_username,
+              },
+            ]}
+            data={applicants.data}
+            expandableRows
+            expandableRowsComponent={RosterExpanded}
+          />
+        ))
+        .exhaustive()}
     </div>
   );
 }

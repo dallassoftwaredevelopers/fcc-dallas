@@ -8,6 +8,7 @@ interface TypographyProps {
   style?: React.CSSProperties;
   className?: string;
   bold?: boolean;
+  italic?: boolean;
 }
 
 // we'll do more with this as we go
@@ -18,6 +19,7 @@ const Typography: React.FC<TypographyProps> = ({
   className,
   noMargin,
   bold,
+  italic,
   style = {},
 }) => {
   const internalStyle = { ...style };
@@ -27,6 +29,9 @@ const Typography: React.FC<TypographyProps> = ({
   }
   if (bold) {
     internalStyle.fontWeight = '700';
+  }
+  if (italic) {
+    internalStyle.fontStyle = 'italic';
   }
   if (noMargin) {
     internalStyle.margin = '0';
