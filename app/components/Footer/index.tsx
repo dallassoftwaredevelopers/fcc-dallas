@@ -4,6 +4,8 @@ import Row from '~/library/components/Row';
 import { P } from '~/library/components/Typography';
 
 function Footer() {
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
   return (
     <footer className="footer">
       <Row justifyContent="center">
@@ -12,7 +14,7 @@ function Footer() {
         </Link>
       </Row>
       <Row justifyContent="center">
-        <P>Copyright © 2022 freeCodeCamp Dallas</P>
+        <P>Copyright © {year} freeCodeCamp Dallas</P>
       </Row>
     </footer>
   );
